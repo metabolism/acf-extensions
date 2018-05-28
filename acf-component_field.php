@@ -38,6 +38,7 @@ class acf_field_component extends acf_field_flexible_content
 
         // create a custom status for this field, looks prettier in the table list
         add_action('init', array($this, 'register_component_post_status'));
+        add_action('init', array($this, 'field_group_enqueue_style'));
 
 
         // add side metabos for component checkbox
@@ -161,7 +162,7 @@ class acf_field_component extends acf_field_flexible_content
 		        $sub_fields = $component['fields'];
 
 		        // validate layout
-		        $layout = ['name'=>sanitize_title($component['title']), 'label'=> $component['title']];
+		        $layout = ['name'=>sanitize_title($component['title']), 'label'=> $component['title'], 'ID'=> $component['ID']];
 		        $layout = $this->get_valid_layout( $layout );
 
 		        // append sub fields
@@ -227,6 +228,9 @@ class acf_field_component extends acf_field_flexible_content
 	        }
         }
 
+	     $field_group['ID'] = get_the_ID();
+	     $field_group['active'] = true;
+
      	return $field_group;
      }
 
@@ -280,6 +284,22 @@ class acf_field_component extends acf_field_flexible_content
     }
 
     /**
+     * Add scripts for group editing page
+     *
+     * @since  1.0.0
+     * @return void
+     */
+    public function field_group_enqueue_style()
+    {
+        $dir = plugin_dir_url(__FILE__);
+
+        wp_enqueue_style(
+            'acf-group-component_thumbnail',
+            "{$dir}css/thumbnail.css"
+        );
+    }
+
+    /**
      * Register a seperated post status to indicate component
      *
      * @since  1.0.0
@@ -326,7 +346,20 @@ class acf_field_component extends acf_field_flexible_content
 	 */
 	public function acf_flexible_content_layout_title_thumbnail( $title, $field, $layout, $i ) {
 
-		//todo
+		$thumbnail = get_the_post_thumbnail_url($layout['ID'], 'thumbnail');
+
+		if( $thumbnail )
+		{
+			$large = str_replace('-150x150', '', $thumbnail);
+
+			$html = '<div class="thumbnail">';
+			$html .= '<img src="' . $thumbnail . '" class="small" title=""/>';
+			$html .= '<img src="' . $large . '" class="large" />';
+			$html .= '</div>';
+			$html .= $title;
+
+			return $html;
+		}
 
 		return $title;
 
@@ -483,7 +516,8 @@ class acf_field_component extends acf_field_flexible_content
 
         // if acf is able to load it from local json or php, then we return it
         if ($field_group = acf_get_field_group($group_key)) {
-            return ['title'=>$field_group['title'], 'fields'=>acf_get_fields($field_group)];
+
+	        return ['title'=>$field_group['title'], 'fields'=>acf_get_fields($field_group), 'ID'=>$field_group['ID']];
         }
 
         if ($this->is_wpml_translatable()) {
@@ -510,7 +544,7 @@ class acf_field_component extends acf_field_flexible_content
             return array();
         }
 
-        return ['title'=>$posts[0]->title, 'fields'=>acf_get_fields($posts[0]->ID)];
+        return ['title'=>$posts[0]->title, 'fields'=>acf_get_fields($posts[0]->ID), 'ID'=>$posts[0]->ID];
     }
 
     /**

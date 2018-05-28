@@ -39,6 +39,7 @@ class acf_field_component extends acf_field_flexible_content
         // create a custom status for this field, looks prettier in the table list
         add_action('init', array($this, 'register_component_post_status'));
 
+
         // add side metabos for component checkbox
         add_action('add_meta_boxes', array($this, 'add_component_meta_boxes'));
 
@@ -59,8 +60,14 @@ class acf_field_component extends acf_field_flexible_content
         // change the proper status when a field group is duplicated
         add_action('acf/duplicate_field_group', array($this, 'update_component_status_on_duplication'));
 
+        // do not save layouts on export
+	    add_action('acf/prepare_field_group_for_export', array($this, 'prepare_field_group_for_export'));
+
         // append 'acf-component' status to all wp_query that queries 'acf-field-group'
         add_action('pre_get_posts', array($this, 'include_component_post_status'));
+
+        //add featured image in title if available
+	    add_filter('acf/fields/flexible_content/layout_title', array($this, 'acf_flexible_content_layout_title_thumbnail'), 10, 4);
 
         // called the base, no parent, cause we're hacking the repeater
         acf_field::__construct();
@@ -88,7 +95,7 @@ class acf_field_component extends acf_field_flexible_content
      */
 	public function render_field_settings($field)
     {
-        // The ACF Group that we want to use
+	    // The ACF Group that we want to use
         acf_render_field_setting($field, array(
             'label'         => __('Fields Group', 'acf-components'),
             'instructions'  => __('Select fields group to be used', 'acf-components'),
@@ -182,9 +189,8 @@ class acf_field_component extends acf_field_flexible_content
 	        }
         }
 
-	    if ( get_post_type() != 'acf-field-group') {
+	    if ( (!isset($_GET['post_type']) || $_GET['post_type'] != 'acf-field-group') && get_post_type() != 'acf-field-group')
 		    $field['type'] = 'flexible_content';
-	   }
 
         return $field;
     }
@@ -200,6 +206,29 @@ class acf_field_component extends acf_field_flexible_content
     // public function render_field($field)
     // {
     // }
+
+
+    /**
+     * Remove layout from filed group
+     *
+     * @since  1.0.2
+     * @deprecated 1.0.12
+     * @param  array $field_group
+     * @return array
+     */
+     public function prepare_field_group_for_export($field_group)
+     {
+     	if(isset($field_group['fields']))
+        {
+	        foreach ($field_group['fields'] as &$field)
+	        {
+		        if( $field['type'] == 'components' && isset($field['layouts']))
+			        unset($field['layouts']);
+	        }
+        }
+
+     	return $field_group;
+     }
 
     /**
      * Add scripts for input editing page
@@ -266,6 +295,9 @@ class acf_field_component extends acf_field_flexible_content
             'show_in_admin_status_list' => true,
             'label_count'               => _n_noop('Component <span class="count">(%s)</span>', 'Components <span class="count">(%s)</span>', 'acf-components'),
         ));
+
+        if( (isset($_GET['post']) && get_post_status($_GET['post']) == 'acf-component') || (isset($_POST['post_ID']) && get_post_status($_POST['post_ID']) == 'acf-component') )
+	        add_post_type_support( 'acf-field-group', 'thumbnail' );
     }
 
     /**
@@ -278,12 +310,27 @@ class acf_field_component extends acf_field_flexible_content
     {
         add_meta_box(
             'acf-component-field-metabox',
-            __('Used as ACF Component Field?', 'acf-components'),
+            __('ACF Component Field', 'acf-components'),
             array($this, 'component_metabox_callback'),
             'acf-field-group',
             'side'
         );
     }
+
+
+	/**
+	 * Show thumbnail in the title if available
+	 *
+	 * @since  1.0.0
+	 * @return string
+	 */
+	public function acf_flexible_content_layout_title_thumbnail( $title, $field, $layout, $i ) {
+
+		//todo
+
+		return $title;
+
+	}
 
     /**
      * Callback for the metabox output
@@ -296,9 +343,9 @@ class acf_field_component extends acf_field_flexible_content
         global $post;
         $checked = $post->post_status == 'acf-component'? 'checked' : '';
         printf('<input type="hidden" name="%s" value="0" />', 'acf_field_group[is_acf_component]');
-        printf('<label><input type="checkbox" name="%s" value="1" %s id="is_acf_component_checkbox" /> %s.</label>',
+        printf('<label><input type="checkbox" name="%s" value="1" %s id="is_acf_component_checkbox" /> %s</label>',
             'acf_field_group[is_acf_component]',
-            $checked, __('this is a component', 'acf-components')
+            $checked, __('use as component', 'acf-components')
         );
     }
 

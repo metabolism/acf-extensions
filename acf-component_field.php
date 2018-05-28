@@ -365,6 +365,102 @@ class acf_field_component extends acf_field_flexible_content
 
 	}
 
+
+	/**
+	 *  load_value()
+	 *
+	 *  This filter is applied to the $value after it is loaded from the db
+	 *
+	 * @since    3.6
+	 * @date    23/01/13
+	 *
+	 * @param    $value (mixed) the value found in the database
+	 * @param    $post_id (mixed) the $post_id from which the value was loaded
+	 * @param    $field (array) the field array holding all the field options
+	 * @return array|bool $value
+	 */
+	function load_value( $value, $post_id, $field ) {
+
+		// bail early if no value
+		if( empty($value) || empty($field['layouts']) ) {
+
+			return $value;
+
+		}
+
+
+		// value must be an array
+		$value = acf_get_array( $value );
+
+
+		// vars
+		$rows = array();
+
+
+		// sort layouts into names
+		$layouts = array();
+		foreach( $field['layouts'] as $k => $layout ) {
+
+			$layouts[ $layout['name'] ] = isset($layout['sub_fields'])?$layout['sub_fields']:[];
+
+		}
+
+
+		// loop through rows
+		foreach( $value as $i => $l ) {
+
+			// append to $values
+			$rows[ $i ] = array();
+			$rows[ $i ]['acf_fc_layout'] = $l;
+
+
+			// bail early if layout deosnt contain sub fields
+			if( empty($layouts[ $l ]) ) {
+
+				continue;
+
+			}
+
+
+			// get layout
+			$layout = $layouts[ $l ];
+
+
+			// loop through sub fields
+			foreach( array_keys($layout) as $j ) {
+
+				// get sub field
+				$sub_field = $layout[ $j ];
+
+
+				// bail ealry if no name (tab)
+				if( acf_is_empty($sub_field['name']) ) continue;
+
+
+				// update full name
+				$sub_field['name'] = "{$field['name']}_{$i}_{$sub_field['name']}";
+
+
+				// get value
+				$sub_value = acf_get_value( $post_id, $sub_field );
+
+
+				// add value
+				$rows[ $i ][ $sub_field['key'] ] = $sub_value;
+
+			}
+			// foreach
+
+		}
+		// foreach
+
+
+
+		// return
+		return $rows;
+
+	}
+
     /**
      * Callback for the metabox output
      *

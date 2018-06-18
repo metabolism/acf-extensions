@@ -160,6 +160,10 @@ class acf_field_component extends acf_field_flexible_content
 
 				// extract layout
 				$component = $this->get_component($i);
+
+				if( !isset($component['fields']) )
+					continue;
+
 				$sub_fields = $component['fields'];
 
 				// validate layout

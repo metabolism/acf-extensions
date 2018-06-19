@@ -370,9 +370,7 @@ class acf_field_component extends acf_field_flexible_content
 	 */
 	public function acf_flexible_content_layout_title_thumbnail( $title, $field, $layout, $i ) {
 
-		$thumbnail_id = $layout['thumbnail_id'];
-
-		if( $thumbnail_id and !empty($thumbnail_id) and $thumbnail = wp_get_attachment_url($thumbnail_id))
+		if( isset($layout['thumbnail_id']) and $thumbnail_id = $layout['thumbnail_id'] and !empty($thumbnail_id) and $thumbnail = wp_get_attachment_url($thumbnail_id))
 		{
 			$path_parts = pathinfo($thumbnail);
 			$small = str_replace('.'.$path_parts['extension'], '-150x150.'.$path_parts['extension'], $thumbnail);

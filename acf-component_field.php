@@ -38,7 +38,9 @@ class acf_field_component extends acf_field_flexible_content
 
 		// create a custom status for this field, looks prettier in the table list
 		add_action('init', array($this, 'register_component_post_status'));
-		add_action('init', array($this, 'field_group_enqueue_style'));
+
+		if( is_admin() )
+			add_action('init', array($this, 'field_group_enqueue_style'));
 
 
 		// add side metabos for component checkbox

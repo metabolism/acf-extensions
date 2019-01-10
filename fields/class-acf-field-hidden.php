@@ -11,7 +11,7 @@ if( ! class_exists('acf_field_hidden') ) :
 		*  This function will setup the field type data
 		*
 		*  @type	function
-		*  @date	5/03/2014
+		*  @date	01/10/2019
 		*  @since	5.0.0
 		*
 		*  @param	n/a
@@ -26,7 +26,6 @@ if( ! class_exists('acf_field_hidden') ) :
 			$this->defaults = array(
 				'default_value'	=> ''
 			);
-
 		}
 
 
@@ -54,7 +53,8 @@ if( ! class_exists('acf_field_hidden') ) :
 			));
 
 		}
-
 	}
+
+	acf_register_field_type( 'acf_field_hidden' );
 
 endif; // class_exists check

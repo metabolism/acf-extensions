@@ -200,7 +200,7 @@ if( ! class_exists('acf_field_components') ) :
 			if ( (!isset($_GET['post_type']) || $_GET['post_type'] != 'acf-field-group') && get_post_type() != 'acf-field-group')
 				$field['type'] = 'flexible_content';
 
-			return $field;
+			return parent::load_field($field);
 		}
 
 		/**
@@ -217,7 +217,7 @@ if( ! class_exists('acf_field_components') ) :
 
 
 		/**
-		 * Remove layout from filed group and add thumbnail id
+		 * Remove layout from filed group and add thumbnail id, recursively
 		 *
 		 * @since  1.0.2
 		 * @deprecated 1.0.12
@@ -226,17 +226,26 @@ if( ! class_exists('acf_field_components') ) :
 		 */
 		public function prepare_field_group_for_export($field_group)
 		{
-			if(isset($field_group['fields']))
+			if( isset($field_group['fields']) )
+				$type = 'fields';
+			elseif( isset($field_group['sub_fields']) )
+				$type = 'sub_fields';
+			else
+				return $field_group;
+
+			foreach ($field_group[$type] as &$field)
 			{
-				foreach ($field_group['fields'] as &$field)
-				{
-					if( $field['type'] == 'components' && isset($field['layouts']))
-						unset($field['layouts']);
-				}
+				if( $field['type'] == 'components' && isset($field['layouts']))
+					unset($field['layouts']);
+
+				$field = $this->prepare_field_group_for_export($field);
 			}
 
-			$field_group['thumbnail_id'] = get_post_thumbnail_id(get_the_ID());
-			$field_group['active'] = true;
+			if($type == 'fields'){
+
+				$field_group['thumbnail_id'] = get_post_thumbnail_id(get_the_ID());
+				$field_group['active'] = true;
+			}
 
 			return $field_group;
 		}
@@ -269,15 +278,7 @@ if( ! class_exists('acf_field_components') ) :
 		 */
 		public function input_admin_enqueue_scripts()
 		{
-			$dir = plugin_dir_url(__FILE__);
-
-			wp_enqueue_script(
-				'acf-input-component_field',
-				"{$dir}js/input.js",
-				array('acf-pro-input'),
-				false,
-				acf_get_setting('version')
-			);
+			$dir = plugin_dir_url(__DIR__);
 
 			wp_enqueue_style(
 				'acf-input-component_field',
@@ -293,7 +294,7 @@ if( ! class_exists('acf_field_components') ) :
 		 */
 		public function field_group_admin_enqueue_scripts()
 		{
-			$dir = plugin_dir_url(__FILE__);
+			$dir = plugin_dir_url(__DIR__);
 
 			wp_enqueue_script(
 				'acf-group-component_field',
@@ -317,7 +318,7 @@ if( ! class_exists('acf_field_components') ) :
 		 */
 		public function field_group_enqueue_style()
 		{
-			$dir = plugin_dir_url(__FILE__);
+			$dir = plugin_dir_url(__DIR__);
 
 			wp_enqueue_style(
 				'acf-group-component_thumbnail',

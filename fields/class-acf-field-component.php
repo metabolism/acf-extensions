@@ -31,7 +31,7 @@ if( ! class_exists('acf_field_component') ) :
 		function initialize() {
 
 			// vars
-			$this->name = 'component_field';
+			$this->name = 'component';
 			$this->category = 'relational';
 			$this->label = __('Component','acf');
 			$this->defaults = array(
@@ -70,8 +70,72 @@ if( ! class_exists('acf_field_component') ) :
 		function acf_clone_field( $field, $clone_field ) {
 
 			// bail early if this field is being cloned by some other kind of field (future proof)
-			$clone_field['type'] = 'clone';
+			if($clone_field['type'] == 'component_field')
+				$clone_field['type'] = 'clone';
+
+			if($field['type'] == 'component_field')
+				$field['type'] = 'clone';
+
 			return parent::acf_clone_field($field, $clone_field);
+		}
+
+		/*
+	*  acf_get_fields
+	*
+	*  This function will hook into the 'acf/get_fields' filter and inject/replace seamless clones fields
+	*
+	*  @type	function
+	*  @date	17/06/2016
+	*  @since	5.3.8
+	*
+	*  @param	$fields (array)
+	*  @param	$parent (array)
+	*  @return	$fields
+	*/
+
+		function acf_get_fields( $fields, $parent ) {
+
+			// bail early if empty
+			if( empty($fields) ) return $fields;
+
+
+			// bail early if not enabled
+			if( !$this->is_enabled() ) return $fields;
+
+
+			// vars
+			$i = 0;
+
+
+			// loop
+			while( $i < count($fields) ) {
+
+				// vars
+				$field = $fields[ $i ];
+
+
+				// $i
+				$i++;
+
+
+				// bail ealry if not a clone field
+				if( $field['type'] != 'component_field' ) continue;
+
+
+				// bail ealry if not seamless
+				if( $field['display'] != 'seamless' ) continue;
+
+
+				// replace this clone field with sub fields
+				$i--;
+				array_splice($fields, $i, 1, $field['sub_fields']);
+
+			}
+
+
+			// return
+			return $fields;
+
 		}
 
 
@@ -90,7 +154,9 @@ if( ! class_exists('acf_field_component') ) :
 	     */
 		function get_cloned_fields( $field ) {
 
-			$field['clone'] = [$field['field_group_id']];
+			if(isset($field['field_group_id']))
+				$field['clone'] = [$field['field_group_id']];
+
 			return parent::get_cloned_fields($field);
 
 		}
@@ -140,6 +206,19 @@ if( ! class_exists('acf_field_component') ) :
 				'ui'			=> 0,
 				'choice'       => false,
 				'acf-components::select_group' => true
+			));
+
+			// display
+			acf_render_field_setting( $field, array(
+				'label'			=> __('Display','acf'),
+				'instructions'	=> __('Specify the style used to render the clone field', 'acf'),
+				'type'			=> 'select',
+				'name'			=> 'display',
+				'class'			=> 'setting-display',
+				'choices'		=> array(
+					'group'			=> __('Group (displays selected fields in a group within this field)','acf'),
+					'seamless'		=> __('Seamless (replaces this field with selected fields)','acf'),
+				),
 			));
 		}
 	}

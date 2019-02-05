@@ -70,10 +70,10 @@ if( ! class_exists('acf_field_component') ) :
 		function acf_clone_field( $field, $clone_field ) {
 
 			// bail early if this field is being cloned by some other kind of field (future proof)
-			if($clone_field['type'] == 'component_field')
+			if($clone_field['type'] == 'component')
 				$clone_field['type'] = 'clone';
 
-			if($field['type'] == 'component_field')
+			if($field['type'] == 'component')
 				$field['type'] = 'clone';
 
 			return parent::acf_clone_field($field, $clone_field);
@@ -119,11 +119,10 @@ if( ! class_exists('acf_field_component') ) :
 
 
 				// bail ealry if not a clone field
-				if( $field['type'] != 'component_field' ) continue;
-
+				if( $field['type'] != 'component' ) continue;
 
 				// bail ealry if not seamless
-				if( $field['display'] != 'seamless' ) continue;
+				if( !isset($field['display']) || $field['display'] != 'seamless' ) continue;
 
 
 				// replace this clone field with sub fields

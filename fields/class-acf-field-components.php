@@ -233,6 +233,9 @@ if( ! class_exists('acf_field_components') ) :
 			else
 				return $field_group;
 
+			if( !is_array($field_group[$type]))
+				return $field_group;
+
 			foreach ($field_group[$type] as &$field)
 			{
 				if( $field['type'] == 'components' && isset($field['layouts']))

@@ -60,6 +60,8 @@ if( ! class_exists('acf_field_components') ) :
 			// also need to make sure this trigger before the json local cache
 			add_filter('acf/get_field_groups', array($this, 'include_component_field_groups'), 5);
 
+			add_filter('acf/get_field_group', array($this, 'set_active_status'));
+
 			// change the proper status when a field group is duplicated
 			add_action('acf/duplicate_field_group', array($this, 'update_component_status_on_duplication'));
 
@@ -87,6 +89,21 @@ if( ! class_exists('acf_field_components') ) :
 		public function initialize()
 		{
 			// nothing
+		}
+
+		/**
+		 * Initialize
+		 *
+		 * @since   1.0.13
+		 * @version 1.0.13
+		 * @return  array
+		 */
+		public function set_active_status($field_group)
+		{
+			if( isset($field_group['is_acf_component']) && $field_group['is_acf_component'])
+				$field_group['active'] = true;
+
+			return $field_group;
 		}
 
 		/**
@@ -202,18 +219,6 @@ if( ! class_exists('acf_field_components') ) :
 
 			return parent::load_field($field);
 		}
-
-		/**
-		 * Render the field
-		 *
-		 * @since  1.0.2
-		 * @deprecated 1.0.12
-		 * @param  array $field current field instance
-		 * @return void
-		 */
-		// public function render_field($field)
-		// {
-		// }
 
 
 		/**
@@ -487,7 +492,7 @@ if( ! class_exists('acf_field_components') ) :
 		 *
 		 * @since  1.0.0
 		 * @param  array $field current field instance
-		 * @return void
+		 * @return array
 		 */
 		public function duplicate_field( $field )
 		{
@@ -505,8 +510,8 @@ if( ! class_exists('acf_field_components') ) :
 		{
 			$available_groups = array();
 
-			// load forom local php
-			$local_groups = acf_local()->groups;
+			// load from local php
+			$local_groups = acf()->local->groups;
 			foreach ($local_groups as $group) {
 				if (isset($group['is_acf_component']) && $group['is_acf_component']) {
 					$available_groups[$group['key']] = $group['title'];
@@ -534,7 +539,7 @@ if( ! class_exists('acf_field_components') ) :
 		 *
 		 * @since  1.0.2
 		 * @version 1.0.11
-		 * @param  array $field current field instance
+		 * @param $group_key
 		 * @return array
 		 */
 		protected function get_component($group_key) {
@@ -652,7 +657,7 @@ if( ! class_exists('acf_field_components') ) :
 		 *
 		 * @since  1.0.14
 		 * @param  object $query WP_Query
-		 * @return boid
+		 * @return void
 		 */
 		public function include_component_post_status($query)
 		{

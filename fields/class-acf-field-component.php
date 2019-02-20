@@ -15,6 +15,9 @@ if( ! class_exists('acf_field_component') ) :
 	 */
 	class acf_field_component extends acf_field_clone {
 
+		public $cloning;
+		public $have_rows;
+
 		/*
 		*  initialize
 		*

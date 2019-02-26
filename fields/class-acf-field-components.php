@@ -511,7 +511,7 @@ if( ! class_exists('acf_field_components') ) :
 			$available_groups = array();
 
 			// load from local php
-			$local_groups = acf()->local->groups;
+			$local_groups = acf_get_local_field_groups();
 			foreach ($local_groups as $group) {
 				if (isset($group['is_acf_component']) && $group['is_acf_component']) {
 					$available_groups[$group['key']] = $group['title'];

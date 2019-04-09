@@ -381,7 +381,7 @@ if( ! class_exists('acf_field_components') ) :
 		 */
 		public function acf_flexible_content_layout_title_thumbnail( $title, $field, $layout, $i ) {
 
-			if( isset($layout['thumbnail_id']) and $thumbnail_id = $layout['thumbnail_id'] and !empty($thumbnail_id) and $thumbnail = wp_get_attachment_url($thumbnail_id))
+			if( isset($layout['thumbnail_id']) && !empty($layout['thumbnail_id']) && $thumbnail = wp_get_attachment_url($layout['thumbnail_id']))
 			{
 				$path_parts = pathinfo($thumbnail);
 				$small = str_replace('.'.$path_parts['extension'], '-150x150.'.$path_parts['extension'], $thumbnail);
@@ -552,7 +552,12 @@ if( ! class_exists('acf_field_components') ) :
 			// if acf is able to load it from local json or php, then we return it
 			if ($field_group = acf_get_field_group($group_key)) {
 
-				return ['title'=>$field_group['title'], 'fields'=>acf_get_fields($field_group), 'thumbnail_id'=>isset($field_group['thumbnail_id'])?$field_group['thumbnail_id']:''];
+				$thumbnail_id = isset($field_group['thumbnail_id'])?$field_group['thumbnail_id']:false;
+				if(!$thumbnail_id && isset($field_group['ID'])){
+					$thumbnail_id = get_post_thumbnail_id($field_group['ID']);
+				}
+
+				return ['title'=>$field_group['title'], 'fields'=>acf_get_fields($field_group), 'thumbnail_id'=>$thumbnail_id];
 			}
 
 			if ($this->is_wpml_translatable()) {
@@ -579,7 +584,9 @@ if( ! class_exists('acf_field_components') ) :
 				return array();
 			}
 
-			return ['title'=>$posts[0]->title, 'fields'=>acf_get_fields($posts[0]->ID), 'thumbnail_id'=>get_post_thumbnail_id($posts[0]->ID)];
+			$post = $posts[0];
+
+			return ['title'=>$post->title, 'fields'=>acf_get_fields($post->ID), 'thumbnail_id'=>get_post_thumbnail_id($post->ID)];
 		}
 
 		/**

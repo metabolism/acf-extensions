@@ -79,65 +79,15 @@ if( ! class_exists('acf_field_component') ) :
 			if($field['type'] == 'component')
 				$field['type'] = 'clone';
 
-			return parent::acf_clone_field($field, $clone_field);
-		}
+			$name = $clone_field['name'];
+			$display = $clone_field['display'];
 
-		/*
-	*  acf_get_fields
-	*
-	*  This function will hook into the 'acf/get_fields' filter and inject/replace seamless clones fields
-	*
-	*  @type	function
-	*  @date	17/06/2016
-	*  @since	5.3.8
-	*
-	*  @param	$fields (array)
-	*  @param	$parent (array)
-	*  @return	$fields
-	*/
+			$field = parent::acf_clone_field($field, $clone_field);
 
-		function acf_get_fields( $fields, $parent ) {
+			if( $display == 'group' )
+				$field['name'] = $field['__name'] = $name.'_'.$field['name'];
 
-			// bail early if empty
-			if( empty($fields) ) return $fields;
-
-
-			// bail early if not enabled
-			if( !$this->is_enabled() ) return $fields;
-
-
-			// vars
-			$i = 0;
-
-
-			// loop
-			while( $i < count($fields) ) {
-
-				// vars
-				$field = $fields[ $i ];
-
-
-				// $i
-				$i++;
-
-
-				// bail ealry if not a clone field
-				if( $field['type'] != 'component' ) continue;
-
-				// bail ealry if not seamless
-				if( !isset($field['display']) || $field['display'] != 'seamless' ) continue;
-
-
-				// replace this clone field with sub fields
-				$i--;
-				array_splice($fields, $i, 1, $field['sub_fields']);
-
-			}
-
-
-			// return
-			return $fields;
-
+			return $field;
 		}
 
 

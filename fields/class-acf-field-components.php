@@ -71,6 +71,7 @@ if( ! class_exists('acf_field_components') ) :
 
 			// append 'acf-component' status to all wp_query that queries 'acf-field-group'
 			add_action('pre_get_posts', array($this, 'include_component_post_status'));
+			add_action('acf/render_field', array($this, 'render_field'));
 
 			//add featured image in title if available
 			add_filter('acf/fields/flexible_content/layout_title', array($this, 'acf_flexible_content_layout_title_thumbnail'), 10, 4);
@@ -89,6 +90,55 @@ if( ! class_exists('acf_field_components') ) :
 		public function initialize()
 		{
 			// nothing
+		}
+
+		/*
+	     *  render_field()
+	     *
+	     *  Create the HTML interface for your field
+	     *
+	     *  @param	$field - an array holding all the field's data
+	     *
+	     *  @type	action
+	     *  @since	3.6
+	     *  @date	23/01/13
+	     */
+
+		function render_field( $field ) {
+
+			if( $field['type'] == 'flexible_content' ){
+
+				echo '<script type="text-html" class="tmpl-popup tmpl-popup-components"><ul>';
+
+				foreach( $field['layouts'] as $layout ){
+					$atts = array(
+						'href'			=> '#',
+						'data-layout'	=> $layout['name'],
+						'data-min' 		=> $layout['min'],
+						'data-max' 		=> $layout['max'],
+					);
+
+					echo '<li><a ';
+					acf_esc_attr_e( $atts );
+					echo '>'.$layout['label'].'</a>';
+
+					if( isset($layout['thumbnail_id']) && !empty($layout['thumbnail_id']) )
+						$thumbnail = wp_get_attachment_url($layout['thumbnail_id']);
+
+					if( !$thumbnail && isset($layout['thumbnail_path']) && !empty($layout['thumbnail_path']) )
+						$thumbnail = $layout['thumbnail_path'];
+
+					if( $thumbnail )
+						echo '<span><img src="'.$thumbnail.'"></span>';
+
+					echo '</li>';
+				}
+
+				echo '</ul></script>';
+				echo '<script type="text-javascript">';
+				echo "$('.tmpl-popup-components').prev().find('.tmpl-popup').replaceWith($('.tmpl-popup-components'))";
+				echo '</script>';
+			}
 		}
 
 		/**
@@ -639,11 +689,6 @@ if( ! class_exists('acf_field_components') ) :
 				];
 			}
 
-			if ($this->is_wpml_translatable()) {
-				$translated = $this->getTranslatedFieldGroup($group_key);
-				$group_key = $translated;
-			}
-
 			// vars
 			$args = array(
 				'posts_per_page'    => 1,
@@ -679,11 +724,6 @@ if( ! class_exists('acf_field_components') ) :
 		public function filter_available_field_groups($field) {
 			if ($field['type'] == 'select' && isset($field['acf-components::select_group'])) {
 				$field['choices'] = $this->fetch_available_field_groups();
-
-				if (! isset($field['value'], $field['choices']) && $this->is_wpml_translatable()) {
-					$translated = $this->getTranslatedFieldGroup($field['value']);
-					$field['value'] = $translated;
-				}
 
 			}
 			return $field;
@@ -759,39 +799,6 @@ if( ! class_exists('acf_field_components') ) :
 			$postStatus[] = 'acf-component';
 
 			$query->set('post_status', $postStatus);
-		}
-
-		/**
-		 * Get the translation field group key without the wpml adjust id filter on
-		 *
-		 * @since   1.0.11
-		 * @param   string $field_group_key field_group_key
-		 * @return  string
-		 */
-		protected function getTranslatedFieldGroup($field_group_key)
-		{
-			$args = array(
-				'posts_per_page'    => 1,
-				'post_type'         => 'acf-field-group',
-				'orderby'           => 'menu_order title',
-				'order'             => 'ASC',
-				'suppress_filters'  => true,
-				'post_status'       => array('acf-component'),
-				'pagename'          => $field_group_key
-			);
-
-			$posts = get_posts( $args );
-
-			return $posts ? get_post(icl_object_id($posts[0]->ID, 'acf-field-group'))->post_name : $field_group_key;
-		}
-
-		protected function is_wpml_translatable()
-		{
-			if (! defined('ICL_SITEPRESS_VERSION')) return false;
-
-			$sync_option = icl_get_setting('custom_posts_sync_option');
-
-			return acf_maybe_get($sync_option, 'acf-field-group', false);
 		}
 
 		/**

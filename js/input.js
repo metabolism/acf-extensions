@@ -28,7 +28,7 @@
         'click a[data-event="add-component"]'       : '_add',
         'click a[data-event="remove-component"]'    : '_remove',
         'mouseenter td.order'                       : '_mouseenter'
-    },
+    };
 
     // and init it
     acf.fields.component_field = acf.field.extend(args);

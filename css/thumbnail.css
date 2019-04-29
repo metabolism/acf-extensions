@@ -12,3 +12,28 @@
 }
 
 .acf-fc-layout-handle .thumbnail:hover .large{ display: block }
+
+
+.acf-fc-popup [data-layout]+span{
+    position: absolute; right: 100%; top: 50%; transform: translateY(-50%); display: none; margin-right: 10px;
+    border: 1px solid #ddd; padding: 5px; background: #fff; max-width:600px; box-shadow: 0 0 10px rgba(0,0,0,0.08);
+}
+
+.acf-fc-popup [data-layout]+span:after{
+    width: 0; height: 0; border-style: solid; border-width: 7.5px 0 7.5px 8px; border-color: transparent transparent transparent #ffffff;
+    position: absolute; left: 100%; top: 50%; margin-top: -5px; content: ''; z-index: 1;
+}
+
+
+.acf-fc-popup [data-layout]+span:before{
+    width: 0; height: 0; border-style: solid; border-width: 8.5px 0 8.5px 10px; border-color: transparent transparent transparent #ddd;
+    position: absolute; left: 100%; top: 50%; margin-top: -5.5px; content: ''; z-index: 0;
+}
+
+.acf-fc-popup li:hover [data-layout]+span{
+    display: block;
+}
+.acf-fc-popup [data-layout]+span img{ max-width:600px; width: auto; height: auto; display: block }
+
+.postbox{ box-shadow: none }
+.postbox.closed .hndle{ border-bottom: 0 }

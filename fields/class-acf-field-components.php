@@ -186,7 +186,13 @@ if( ! class_exists('acf_field_components') ) :
 					$sub_fields = $component['fields'];
 
 					// validate layout
-					$layout = ['name'=>sanitize_title($component['title']), 'label'=> $component['title'], 'thumbnail_id'=> isset($component['thumbnail_id'])?$component['thumbnail_id']:''];
+					$layout = [
+						'name'=>sanitize_title($component['title']),
+						'label'=> $component['title'],
+						'thumbnail_id'=> isset($component['thumbnail_id'])?$component['thumbnail_id']:'',
+						'thumbnail_path'=> isset($component['thumbnail_path'])?$component['thumbnail_path']:''
+					];
+
 					$layout = $this->get_valid_layout( $layout );
 
 					// append sub fields
@@ -252,6 +258,32 @@ if( ! class_exists('acf_field_components') ) :
 			if($type == 'fields'){
 
 				$field_group['thumbnail_id'] = get_post_thumbnail_id(get_the_ID());
+
+				$wp_upload_dir = wp_upload_dir();
+
+				$acf_thumb_dir = '/acf-thumbnails';
+
+				$image_src = wp_get_attachment_image_src($field_group['thumbnail_id']);
+
+				if( $image_src && count($image_src) ){
+
+					$src_filename = str_replace($wp_upload_dir['relative'],'', $image_src[0]);
+					$dest_filepath = $wp_upload_dir['basedir'].$acf_thumb_dir.$src_filename;
+
+					$dest_folder = dirname($dest_filepath);
+					if( !is_dir( $dest_folder ) )
+						mkdir($dest_folder, 0777, true);
+
+					if( file_exists($wp_upload_dir['basedir'].'/'.$src_filename) ){
+						if( copy($wp_upload_dir['basedir'].'/'.$src_filename, $dest_filepath) ){
+							if( file_exists($wp_upload_dir['basedir'].'/'.str_replace('-150x150','', $src_filename)) ){
+								if( copy($wp_upload_dir['basedir'].'/'.str_replace('-150x150','', $src_filename), str_replace('-150x150','', $dest_filepath)) )
+									$field_group['thumbnail_path'] = $wp_upload_dir['relative'].$acf_thumb_dir.str_replace('-150x150','', $src_filename);
+							}
+						}
+					}
+				}
+
 				$field_group['active'] = true;
 			}
 
@@ -259,7 +291,7 @@ if( ! class_exists('acf_field_components') ) :
 		}
 
 		/**
-		 * Remove layout from filed group
+		 * Update field group
 		 *
 		 * @since  1.0.2
 		 * @deprecated 1.0.12
@@ -268,10 +300,45 @@ if( ! class_exists('acf_field_components') ) :
 		 */
 		public function update_field_group($field_group)
 		{
-			if( isset($field_group['thumbnail_id']) and !empty($field_group['thumbnail_id']))
-			{
-				if( !has_post_thumbnail($field_group['ID']) )
+			if( isset($field_group['thumbnail_id'], $field_group['thumbnail_path']) and !empty($field_group['thumbnail_id']) and !empty($field_group['thumbnail_path'])) {
+
+				if( !has_post_thumbnail($field_group['ID']) ){
+
+					$post = get_post($field_group['thumbnail_id']);
+
+					if( $post && $post->post_type == 'attachment' && isset($field_group['thumbnail_id'])){
+
+						$attachment_url = wp_get_attachment_url($field_group['thumbnail_id']);
+						if( $attachment_url === str_replace('/acf-thumbnails', '', $field_group['thumbnail_path']) ){
 					set_post_thumbnail($field_group['ID'], $field_group['thumbnail_id']);
+							return $field_group;
+						}
+					}
+
+					$wp_upload_dir = wp_upload_dir();
+					$filepath = $wp_upload_dir['basedir'].str_replace($wp_upload_dir['relative'],'', $field_group['thumbnail_path']);
+					$filename = basename($filepath);
+
+					if( file_exists($filepath) ){
+						$upload_file = wp_upload_bits($filename, null, file_get_contents($filepath));
+						if( !$upload_file['error'] ){
+							$wp_filetype = wp_check_filetype($filename, null );
+							$attachment = array(
+								'post_mime_type' => $wp_filetype['type'],
+								'post_parent' => $field_group['ID'],
+								'post_title' => preg_replace('/\.[^.]+$/', '', $filename),
+								'post_content' => '',
+								'post_status' => 'inherit'
+							);
+							$attachment_id = wp_insert_attachment( $attachment, $upload_file['file'], $field_group['ID'] );
+							if (!is_wp_error($attachment_id)) {
+								$attachment_data = wp_generate_attachment_metadata( $attachment_id, $upload_file['file'] );
+								wp_update_attachment_metadata( $attachment_id,  $attachment_data );
+								set_post_thumbnail($field_group['ID'], $attachment_id);
+							}
+						}
+					}
+				}
 			}
 
 			return $field_group;
@@ -381,8 +448,15 @@ if( ! class_exists('acf_field_components') ) :
 		 */
 		public function acf_flexible_content_layout_title_thumbnail( $title, $field, $layout, $i ) {
 
-			if( isset($layout['thumbnail_id']) && !empty($layout['thumbnail_id']) && $thumbnail = wp_get_attachment_url($layout['thumbnail_id']))
-			{
+			$thumbnail = false;
+
+			if( isset($layout['thumbnail_id']) && !empty($layout['thumbnail_id']) )
+				$thumbnail = wp_get_attachment_url($layout['thumbnail_id']);
+
+			if( !$thumbnail && isset($layout['thumbnail_path']) && !empty($layout['thumbnail_path']) )
+				$thumbnail = $layout['thumbnail_path'];
+
+			if( $thumbnail ) {
 				$path_parts = pathinfo($thumbnail);
 				$small = str_replace('.'.$path_parts['extension'], '-150x150.'.$path_parts['extension'], $thumbnail);
 
@@ -557,7 +631,12 @@ if( ! class_exists('acf_field_components') ) :
 					$thumbnail_id = get_post_thumbnail_id($field_group['ID']);
 				}
 
-				return ['title'=>$field_group['title'], 'fields'=>acf_get_fields($field_group), 'thumbnail_id'=>$thumbnail_id];
+				return [
+					'title'=>$field_group['title'],
+					'fields'=>acf_get_fields($field_group),
+					'thumbnail_path'=>isset($field_group['thumbnail_path'])?$field_group['thumbnail_path']:false,
+					'thumbnail_id'=>$thumbnail_id
+				];
 			}
 
 			if ($this->is_wpml_translatable()) {

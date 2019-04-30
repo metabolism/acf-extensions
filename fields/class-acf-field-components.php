@@ -122,6 +122,8 @@ if( ! class_exists('acf_field_components') ) :
 					acf_esc_attr_e( $atts );
 					echo '>'.$layout['label'].'</a>';
 
+					$thumbnail = false;
+
 					if( isset($layout['thumbnail_id']) && !empty($layout['thumbnail_id']) )
 						$thumbnail = wp_get_attachment_url($layout['thumbnail_id']);
 

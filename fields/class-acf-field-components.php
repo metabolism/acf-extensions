@@ -513,7 +513,7 @@ if( ! class_exists('acf_field_components') ) :
 				$small = str_replace('.'.$path_parts['extension'], '-150x150.'.$path_parts['extension'], $thumbnail);
 
 				$html = '<div class="thumbnail">';
-				$html .= '<img src="' . $small . '" class="small" title=""/>';
+				$html .= '<img src="' . $small . '" class="small"/>';
 				$html .= '<img src="' . $thumbnail . '" class="large" />';
 				$html .= '</div>';
 				$html .= $title;
@@ -679,9 +679,9 @@ if( ! class_exists('acf_field_components') ) :
 			if ($field_group = acf_get_field_group($group_key)) {
 
 				$thumbnail_id = isset($field_group['thumbnail_id'])?$field_group['thumbnail_id']:false;
-				if(!$thumbnail_id && isset($field_group['ID'])){
+				
+				if(!$thumbnail_id && isset($field_group['ID']) && $field_group['ID'])
 					$thumbnail_id = get_post_thumbnail_id($field_group['ID']);
-				}
 
 				return [
 					'title'=>$field_group['title'],

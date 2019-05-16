@@ -502,7 +502,7 @@ class acf_field_component extends acf_field_flexible_content
 		$available_groups = array();
 
 		// load forom local php
-		$local_groups = acf_local()->groups;
+		$local_groups = function_exists('acf_local') ? acf_local()->groups : acf_get_local_field_groups();
 		foreach ($local_groups as $group) {
 			if (isset($group['is_acf_component']) && $group['is_acf_component']) {
 				$available_groups[$group['key']] = $group['title'];

@@ -76,6 +76,10 @@ if( ! class_exists('acf_field_components') ) :
 			//add featured image in title if available
 			add_filter('acf/fields/flexible_content/layout_title', array($this, 'acf_flexible_content_layout_title_thumbnail'), 10, 4);
 
+			// handle slug
+			add_action('edit_form_before_permalink', array($this, 'acf_extensions_add_slug'));
+			add_action('wp_insert_post', array($this, 'acf_extensions_update_component'), 10, 3 );
+
 			// called the base, no parent, cause we're hacking the repeater
 			acf_field::__construct();
 		}
@@ -239,7 +243,7 @@ if( ! class_exists('acf_field_components') ) :
 
 					// validate layout
 					$layout = [
-						'name'=>sanitize_title($component['title']),
+						'name'=> $component['slug'],
 						'label'=> $component['title'],
 						'thumbnail_id'=> isset($component['thumbnail_id'])?$component['thumbnail_id']:'',
 						'thumbnail_path'=> isset($component['thumbnail_path'])?$component['thumbnail_path']:''
@@ -309,17 +313,17 @@ if( ! class_exists('acf_field_components') ) :
 
 			if($type == 'fields'){
 
-				$field_group['thumbnail_id'] = get_post_thumbnail_id(get_the_ID());
+				$thumbnail_id = get_post_thumbnail_id(get_the_ID());
 
 				$wp_upload_dir = wp_upload_dir();
 
 				$acf_thumb_dir = '/acf-thumbnails';
 
-				$image_src = wp_get_attachment_image_src($field_group['thumbnail_id']);
+				$image_src = get_attached_file($thumbnail_id);
 
-				if( $image_src && count($image_src) ){
+				if( $image_src && strlen($image_src) ){
 
-					$src_filename = str_replace($wp_upload_dir['relative'],'', $image_src[0]);
+					$src_filename = str_replace($wp_upload_dir['basedir'],'', $image_src);
 					$dest_filepath = $wp_upload_dir['basedir'].$acf_thumb_dir.$src_filename;
 
 					$dest_folder = dirname($dest_filepath);
@@ -336,7 +340,11 @@ if( ! class_exists('acf_field_components') ) :
 					}
 				}
 
-				$field_group['active'] = true;
+				$field_group['active'] = 1;
+
+				//todo: find a better way than using Request
+				if( isset($_REQUEST['slug']) )
+					$field_group['slug'] = sanitize_title($_REQUEST['slug']);
 			}
 
 			return $field_group;
@@ -544,7 +552,7 @@ if( ! class_exists('acf_field_components') ) :
 		}
 
 		/**
-		 * Check and assign the group to acf-componet status on save and import
+		 * Check and assign the group to acf-component status on save and import
 		 *
 		 * @since  1.0.1
 		 * @version 1.0.9
@@ -553,29 +561,33 @@ if( ! class_exists('acf_field_components') ) :
 		 */
 		public function update_component_post_status($field_group)
 		{
+			$data = array('ID'=>$field_group['ID']);
+
 			// update the post status when it's saving the group
 			if ($group = acf_maybe_get($_POST, 'acf_field_group', false)) {
-				if (acf_maybe_get($group, 'is_acf_component', null)) {
-					$field_group['post_status'] = 'acf-component';
-					wp_update_post($field_group);
-				}
+				if (acf_maybe_get($group, 'is_acf_component', null))
+					$data['post_status'] = 'acf-component';
 			}
 
 			// if it's updated from a sync, update the status as well
 			if (acf_maybe_get($_GET, 'acfsync') || acf_maybe_get($_GET, 'action2') === 'acfsync') {
-				if (acf_maybe_get($field_group, 'is_acf_component', null)) {
-					$field_group['post_status'] = 'acf-component';
-					wp_update_post($field_group);
-				}
+				if (acf_maybe_get($field_group, 'is_acf_component', null))
+					$data['post_status'] = 'acf-component';
+
+				if ($slug = acf_maybe_get($field_group, 'slug', null))
+					$data['post_excerpt'] = $slug;
 			}
 
 			// update the post status when it's importing from json
 			if (isset($_FILES['acf_import_file'])) {
-				if (acf_maybe_get($field_group, 'is_acf_component', null)) {
-					$field_group['post_status'] = 'acf-component';
-					wp_update_post($field_group);
+				if (acf_maybe_get($field_group, 'is_acf_component', null))
+					$data['post_status'] = 'acf-component';
+
+				if ($slug = acf_maybe_get($field_group, 'slug', null))
+					$data['post_excerpt'] = $slug;
 				}
-			}
+
+			wp_update_post($data);
 		}
 
 		/**
@@ -660,6 +672,41 @@ if( ! class_exists('acf_field_components') ) :
 			return $available_groups;
 		}
 
+
+		/**
+		 * Display slug form
+		 *
+		 * @since  1.0.0
+		 * @return void
+		 */
+		public function acf_extensions_add_slug($post) {
+			if($post->post_type == 'acf-field-group' && $post->post_status == 'acf-component'){
+				$html =
+					'<div class="hide-if-no-js">'.
+					'<strong>'.__( 'Slug' ).'</strong> '.
+					'<span id="editable-post-name"><input type="text" name="slug" value="'.$post->post_excerpt.'" autocomplete="off"></span> </span>'.
+					'<span id="edit-slug-buttons"><button type="submit" class="save button button-small">OK</button></span>'.
+					'</div>';
+				echo $html;
+			}
+		}
+
+
+		/**
+		 * Save slug to post_excerpt
+		 *
+		 * @since  1.0.0
+		 * @return void
+		 */
+		public function acf_extensions_update_component($post_ID, $post, $update) {
+
+			if( $post->post_type == 'acf-field-group' && isset($_REQUEST['slug']) ){
+
+				global $wpdb;
+				$wpdb->update( $wpdb->posts, ['post_excerpt' => sanitize_title($_REQUEST['slug'])], ['ID' => $post_ID] );
+			}
+		}
+
 		/**
 		 * Get the component field group
 		 *
@@ -683,11 +730,16 @@ if( ! class_exists('acf_field_components') ) :
 				if(!$thumbnail_id && isset($field_group['ID']) && $field_group['ID'])
 					$thumbnail_id = get_post_thumbnail_id($field_group['ID']);
 
+				$slug = isset($field_group['slug'])?$field_group['slug']:false;
+				if( !$slug )
+					$slug = get_the_excerpt($field_group['ID']);
+
 				return [
 					'title'=>$field_group['title'],
 					'fields'=>acf_get_fields($field_group),
 					'thumbnail_path'=>isset($field_group['thumbnail_path'])?$field_group['thumbnail_path']:false,
-					'thumbnail_id'=>$thumbnail_id
+					'thumbnail_id'=>$thumbnail_id,
+					'slug'=>$slug?$slug:sanitize_title($field_group['title'])
 				];
 			}
 
@@ -712,7 +764,12 @@ if( ! class_exists('acf_field_components') ) :
 
 			$post = $posts[0];
 
-			return ['title'=>$post->title, 'fields'=>acf_get_fields($post->ID), 'thumbnail_id'=>get_post_thumbnail_id($post->ID)];
+			return [
+				'title'=>$post->title,
+				'slug'=>$post->post_excerpt,
+				'fields'=>acf_get_fields($post->ID),
+				'thumbnail_id'=>get_post_thumbnail_id($post->ID)
+			];
 		}
 
 		/**

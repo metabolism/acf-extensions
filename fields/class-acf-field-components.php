@@ -323,18 +323,25 @@ if( ! class_exists('acf_field_components') ) :
 
 				if( $image_src && strlen($image_src) ){
 
-					$src_filename = str_replace($wp_upload_dir['basedir'],'', $image_src);
-					$dest_filepath = $wp_upload_dir['basedir'].$acf_thumb_dir.$src_filename;
+					$src_filename = str_replace($wp_upload_dir['basedir'],'', str_replace('-150x150', '', $image_src));
+					$ext = '.'.pathinfo($src_filename, PATHINFO_EXTENSION);
 
+					$dest_filename = $field_group['key'].$ext;
+					$dest_filepath = $wp_upload_dir['basedir'].$acf_thumb_dir.'/'.$dest_filename;
 					$dest_folder = dirname($dest_filepath);
 					if( !is_dir( $dest_folder ) )
 						mkdir($dest_folder, 0777, true);
 
 					if( file_exists($wp_upload_dir['basedir'].'/'.$src_filename) ){
-						if( copy($wp_upload_dir['basedir'].'/'.$src_filename, $dest_filepath) ){
-							if( file_exists($wp_upload_dir['basedir'].'/'.str_replace('-150x150','', $src_filename)) ){
-								if( copy($wp_upload_dir['basedir'].'/'.str_replace('-150x150','', $src_filename), str_replace('-150x150','', $dest_filepath)) )
-									$field_group['thumbnail_path'] = $wp_upload_dir['relative'].$acf_thumb_dir.str_replace('-150x150','', $src_filename);
+
+						$src_filepath = $wp_upload_dir['basedir'].'/'.$src_filename;
+						$thumb_src_filepath = $wp_upload_dir['basedir'].'/'.str_replace($ext, '-150x150'.$ext, $src_filename);
+						$thumb_dest_filepath = str_replace($ext, '-150x150'.$ext, $dest_filepath);
+
+						if( copy($src_filepath, $dest_filepath) ){
+							if( file_exists($thumb_src_filepath) ){
+								if( copy($thumb_src_filepath, $thumb_dest_filepath) )
+									$field_group['thumbnail_path'] = $wp_upload_dir['relative'].$acf_thumb_dir.'/'.$dest_filename;
 							}
 						}
 					}

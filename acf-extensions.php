@@ -35,6 +35,7 @@ function include_acf_extensions_plugin() {
 	include_once('fields/class-acf-field-components.php');
 	include_once('fields/class-acf-field-hidden.php');
 	include_once('fields/class-acf-field-latest_posts.php');
+	include_once('fields/class-acf-field-better_link.php');
 }
 
 add_action('acf/include_field_types', 'include_acf_extensions_plugin');

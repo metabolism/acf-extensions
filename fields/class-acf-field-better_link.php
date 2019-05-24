@@ -39,7 +39,7 @@ if( ! class_exists('acf_field_better_link') ) :
 		 */
 		public function loadValue($value, $post_id=0, $field=array()){
 
-			if( $field['type'] == 'link' && $value['post_id']){
+			if( $field['type'] == 'link' && isset($value['post_id']) && $value['post_id']){
 
 				$url = get_permalink($value['post_id']);
 				$update = false;

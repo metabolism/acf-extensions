@@ -367,20 +367,9 @@ if( ! class_exists('acf_field_components') ) :
 		 */
 		public function update_field_group($field_group)
 		{
-			if( isset($field_group['thumbnail_id'], $field_group['thumbnail_path']) and !empty($field_group['thumbnail_id']) and !empty($field_group['thumbnail_path'])) {
+			if( isset($field_group['thumbnail_path']) and !empty($field_group['thumbnail_path'])) {
 
 				if( !has_post_thumbnail($field_group['ID']) ){
-
-					$post = get_post($field_group['thumbnail_id']);
-
-					if( $post && $post->post_type == 'attachment' && isset($field_group['thumbnail_id'])){
-
-						$attachment_url = wp_get_attachment_url($field_group['thumbnail_id']);
-						if( $attachment_url === str_replace('/acf-thumbnails', '', $field_group['thumbnail_path']) ){
-					set_post_thumbnail($field_group['ID'], $field_group['thumbnail_id']);
-							return $field_group;
-						}
-					}
 
 					$wp_upload_dir = wp_upload_dir();
 					$filepath = $wp_upload_dir['basedir'].str_replace($wp_upload_dir['relative'],'', $field_group['thumbnail_path']);

@@ -14,7 +14,7 @@ if( ! class_exists('acf_field_better_link') ) :
 		 */
 		public function updateValue($value, $post_id=0, $field=array()){
 
-			if( $field['type'] == 'link'){
+			if( $field['type'] == 'link' && isset($value['url'])){
 
 				$value['post_id'] = url_to_postid($value['url']);
 

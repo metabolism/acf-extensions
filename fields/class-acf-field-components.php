@@ -73,6 +73,8 @@ if( ! class_exists('acf_field_components') ) :
 			add_action('pre_get_posts', array($this, 'include_component_post_status'));
 			add_action('acf/render_field', array($this, 'render_field'));
 
+			add_filter( "acf/location/rule_match", array($this, 'acf_components_rule_match'), 10, 4);
+
 			//add featured image in title if available
 			add_filter('acf/fields/flexible_content/layout_title', array($this, 'acf_flexible_content_layout_title_thumbnail'), 10, 4);
 
@@ -83,6 +85,27 @@ if( ! class_exists('acf_field_components') ) :
 			// called the base, no parent, cause we're hacking the repeater
 			acf_field::__construct();
 		}
+
+
+		/**
+		 * Do not display component, ever.
+		 *
+		 * @param $result
+		 * @param $rule
+		 * @param $screen
+		 * @param $field_group
+		 * @return  bool
+		 * @version 1.0.13
+		 * @since   1.0.13
+		 */
+		public function acf_components_rule_match($result, $rule, $screen, $field_group ){
+
+			if( isset($field_group['is_acf_component']) && $field_group['is_acf_component'] )
+				return false;
+
+			return $result;
+		}
+
 
 		/**
 		 * Initialize

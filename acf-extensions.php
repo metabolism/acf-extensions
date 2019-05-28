@@ -31,6 +31,19 @@ add_action('plugins_loaded', 'acf_extensions_load_textdomain');
  */
 function include_acf_extensions_plugin() {
 
+	$required_version = '5.8.0';
+
+	if( !function_exists('acf') )
+		return;
+
+	$acf = acf();
+
+	if( is_admin() && version_compare($acf->version, $required_version, '<') ) {
+		add_action('admin_notices', function() use($required_version){
+			echo '<div class="error"><p>'.__('ACF Extensions plugin requires ACF PRO '.$required_version).'</p></div>';
+		});
+	}
+
 	include_once('fields/class-acf-field-component.php');
 	include_once('fields/class-acf-field-components.php');
 	include_once('fields/class-acf-field-hidden.php');

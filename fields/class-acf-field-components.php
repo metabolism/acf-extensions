@@ -98,9 +98,9 @@ if( ! class_exists('acf_field_components') ) :
 		 * @version 1.0.13
 		 * @since   1.0.13
 		 */
-		public function acf_components_rule_match($result, $rule, $screen, $field_group ){
+		public function acf_components_rule_match($result, $rule, $screen, $field_group=false ){
 
-			if( isset($field_group['is_acf_component']) && $field_group['is_acf_component'] )
+			if( $field_group && isset($field_group['is_acf_component']) && $field_group['is_acf_component'] )
 				return false;
 
 			return $result;

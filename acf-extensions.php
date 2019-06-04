@@ -54,6 +54,11 @@ function include_acf_extensions_plugin() {
 
 add_action('acf/include_field_types', 'include_acf_extensions_plugin');
 
+add_filter( 'mce_external_plugins', function ( $plugins ) {
+	$plugins['table'] = content_url() . '/plugins/acf-extensions/js/tinymce/table/plugin.min.js';
+	return $plugins;
+});
+
 
 /**
  * Change acf-component status back to acf-diabled when deactivated

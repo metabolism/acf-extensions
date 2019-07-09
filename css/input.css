@@ -1,1 +1,2 @@
 .acf-field-hidden, .acf-field-latest-posts{ display: none; }
+.acf-field .acf-label:empty{ display: none }

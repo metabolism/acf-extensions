@@ -1,8 +1,8 @@
 <?php
 /*
     Plugin Name: Advanced Custom Fields Extensions
-    Description: Advanced Custom Fields add on. Create component, components field, hidden field and lastest post field
-    Version: 1.0.0
+    Description: Advanced Custom Fields add on. Create components, component field, hidden field and latest post field
+    Version: 1.1.0
     Author: Metabolism
     License: GPLv2 or later
     License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -31,16 +31,35 @@ add_action('plugins_loaded', 'acf_extensions_load_textdomain');
  */
 function include_acf_extensions_plugin() {
 
-	include_once('acf-component_field.php');
-	include_once('acf-hidden_field.php');
-	include_once('acf-latest_posts_field.php');
+	$required_version = '5.8.0';
 
-	acf_register_field_type( 'acf_field_component' );
-	acf_register_field_type( 'acf_field_hidden' );
-	acf_register_field_type( 'acf_field_latest_posts' );
+	if( !function_exists('acf') )
+		return;
+
+	$acf = acf();
+
+	if( is_admin() && version_compare($acf->version, $required_version, '<') ) {
+		add_action('admin_notices', function() use($required_version){
+			echo '<div class="error"><p>'.__('ACF Extensions plugin requires ACF PRO '.$required_version).'</p></div>';
+		});
+	}
+
+	include_once('fields/class-acf-field-component.php');
+	include_once('fields/class-acf-field-components.php');
+	include_once('fields/class-acf-field-hidden.php');
+	include_once('fields/class-acf-field-latest_posts.php');
+	include_once('fields/class-acf-field-better_link.php');
+	include_once('fields/class-acf-field-better_map.php');
+
+	include_once('rules/class-acf-rule-multisite.php');
 }
 
 add_action('acf/include_field_types', 'include_acf_extensions_plugin');
+
+add_filter( 'mce_external_plugins', function ( $plugins ) {
+	$plugins['table'] = content_url() . '/plugins/acf-extensions/js/tinymce/table/plugin.min.js';
+	return $plugins;
+});
 
 
 /**

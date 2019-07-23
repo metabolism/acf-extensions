@@ -11,7 +11,7 @@ if( ! class_exists('acf_field_latest_posts') ) :
 		*  This function will setup the field type data
 		*
 		*  @type	function
-		*  @date	5/03/2014
+		*  @date	10/01/2019
 		*  @since	5.0.0
 		*
 		*  @param	n/a
@@ -87,7 +87,8 @@ if( ! class_exists('acf_field_latest_posts') ) :
 			));
 
 		}
-
 	}
+
+	acf_register_field_type( 'acf_field_latest_posts' );
 
 endif; // class_exists check

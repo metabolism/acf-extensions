@@ -50,8 +50,13 @@ if( ! class_exists('acf_rule_multisite') ) :
 		}
 
 		function acf_location_rules_match_site( $match, $rule, $options ) {
-			$current_site = get_current_blog_id();
+
 			$selected_site = (int) $rule['value'];
+
+			if( $selected_site == 'all')
+				return true;
+
+			$current_site = get_current_blog_id();
 
 			if($rule['operator'] == "==") {
 				$match = ( $current_site == $selected_site );

@@ -31,7 +31,7 @@ if( ! class_exists('acf_rule_multisite') ) :
 
 		function acf_location_rule_type_multisite( $choices ) {
 
-			$choices['Multisite']['site'] = __('Site');
+			$choices[__('Misc')]['site'] = __('Site');
 			return $choices;
 
 		}
@@ -58,12 +58,10 @@ if( ! class_exists('acf_rule_multisite') ) :
 
 			$current_site = get_current_blog_id();
 
-			if($rule['operator'] == "==") {
+			if($rule['operator'] == "==")
 				$match = ( $current_site == $selected_site );
-			}
-			elseif($rule['operator'] == "!=") {
+			elseif($rule['operator'] == "!=")
 				$match = ( $current_site != $selected_site );
-			}
 
 			return $match;
 		}

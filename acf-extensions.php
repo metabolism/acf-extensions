@@ -52,6 +52,7 @@ function include_acf_extensions_plugin() {
 	include_once('fields/class-acf-field-better_map.php');
 
 	include_once('rules/class-acf-rule-multisite.php');
+	include_once('rules/class-acf-rule-tax-type.php');
 }
 
 add_action('acf/include_field_types', 'include_acf_extensions_plugin');

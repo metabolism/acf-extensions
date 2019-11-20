@@ -25,8 +25,9 @@ if( !class_exists('acf_rule_term_type') && function_exists('get_taxonomy_templat
 			add_filter('acf/location/rule_types', [$this, 'acf_location_rule_type_term_template']);
 			add_filter('acf/location/rule_values/term_template',  [$this, 'acf_location_rule_values_term_templates']);
 			add_filter('acf/location/rule_match/term_template', [$this, 'acf_location_rules_match_term_template'], 10, 3);
-			add_filter('acf/fields/post_object/query', [$this, 'acf_post_object_query'], 10, 3);
 
+			add_filter('acf/fields/post_object/query', [$this, 'acf_post_object_query'], 10, 3);
+			add_filter('acf/fields/relationship/query', [$this, 'acf_post_object_query'], 10, 3);
 		}
 
 		/**

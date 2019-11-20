@@ -6,37 +6,47 @@ if( ! class_exists('acf_field_better_map') ) :
 
 		/**
 		 * When saving map, save also country and iso
-		 * todo: move to js
 		 * @param $value
 		 * @param int $post_id
 		 * @param array $field
-		 * @return mixed
-		 */
-		public function updateValue($value, $post_id=0, $field=array()){
+         * @return mixed
+         */
+        public function updateValue($value, $post_id=0, $field=array()){
 
-			if( $field['type'] == 'google_map' && isset($value['address']) && !empty($value['address']) ){
+            if( $field['type'] == 'google_map' ){
 
-				$google_api_key = acf_get_setting('google_api_key');
+                if( isset($value['address']) && !empty($value['address']) ){
 
-				$url = 'https://maps.googleapis.com/maps/api/geocode/json?latlng='.$value['lat'].','.$value['lng'].'&sensor=false&key='.$google_api_key.'&result_type=country';
-				$data = json_decode(file_get_contents($url), true);
+                    if( !isset($value['country_short']) ){
 
-				if($data && isset($data['results']) && count($data['results']) ){
+                        $google_api_key = acf_get_setting('google_api_key');
 
-					$result = $data['results'][0];
+                        $url = 'https://maps.googleapis.com/maps/api/geocode/json?latlng='.$value['lat'].','.$value['lng'].'&sensor=false&key='.$google_api_key.'&result_type=country';
+                        $data = json_decode(file_get_contents($url), true);
 
-					if( isset($result['address_components']) && count( $result['address_components'])){
+                        if($data && isset($data['results']) && count($data['results']) ){
 
-						$address = $result['address_components'][0];
+                            $result = $data['results'][0];
 
-						$value['country'] = $address['long_name'];
-						$value['iso'] = $address['short_name'];
-					}
-				}
-			}
+                            if( isset($result['address_components']) && count( $result['address_components'])){
 
-			return $value;
-		}
+                                $address = $result['address_components'][0];
+
+                                $value['country'] = $address['long_name'];
+                                $value['iso'] = $address['short_name'];
+                                $value['country_short'] = $address['short_name'];
+                            }
+                        }
+                    }
+                    else{
+                        //add retro compat
+                        $value['iso'] = $value['country_short'];
+                    }
+                }
+            }
+
+            return $value;
+        }
 
 		/**
 		 * On load, check if country and iso exists else get it from google
@@ -47,29 +57,40 @@ if( ! class_exists('acf_field_better_map') ) :
 		 */
 		public function loadValue($value, $post_id=0, $field=array()){
 
-			if( $field['type'] == 'google_map' && isset($value['address']) && !empty($value['address']) && !isset($value['country'])){
+			if( $field['type'] == 'google_map' ){
 
-				$google_api_key = acf_get_setting('google_api_key');
+			    if( isset($value['address']) && !empty($value['address']) ){
 
-				$url = 'https://maps.googleapis.com/maps/api/geocode/json?latlng='.$value['lat'].','.$value['lng'].'&sensor=false&key='.$google_api_key.'&result_type=country';
-				$data = json_decode(file_get_contents($url), true);
+			        if( isset($value['country']) && isset($value['country_short']) & !isset($value['iso']) ){
+			            //add retro compat
+                        $value['iso'] = $value['country_short'];
+                    }
+			        elseif( !isset($value['country']) ){
 
-				if($data && isset($data['results']) && count($data['results']) ){
+                        $google_api_key = acf_get_setting('google_api_key');
 
-					$result = $data['results'][0];
+                        $url = 'https://maps.googleapis.com/maps/api/geocode/json?latlng='.$value['lat'].','.$value['lng'].'&sensor=false&key='.$google_api_key.'&result_type=country';
+                        $data = json_decode(file_get_contents($url), true);
 
-					if( isset($result['address_components']) && count( $result['address_components'])){
+                        if($data && isset($data['results']) && count($data['results']) ){
 
-						$address = $result['address_components'][0];
+                            $result = $data['results'][0];
 
-						$value['country'] = $address['long_name'];
-						$value['iso'] = $address['short_name'];
+                            if( isset($result['address_components']) && count( $result['address_components'])){
 
-						acf_update_metadata( $post_id, $field['name'], $value );
-						acf_update_metadata( $post_id, $field['name'], $field['key'], true );
-						acf_flush_value_cache( $post_id, $field['name'] );
-					}
-				}
+                                $address = $result['address_components'][0];
+
+                                $value['country'] = $address['long_name'];
+                                $value['country_short'] = $address['short_name'];
+                                $value['iso'] = $address['short_name'];
+
+                                acf_update_metadata( $post_id, $field['name'], $value );
+                                acf_update_metadata( $post_id, $field['name'], $field['key'], true );
+                                acf_flush_value_cache( $post_id, $field['name'] );
+                            }
+                        }
+                    }
+                }
 			}
 
 			return $value;

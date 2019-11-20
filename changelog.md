@@ -2,6 +2,10 @@ CHANGELOG
 ---------
 
 ##1.1.3
+#### Feature
+- added `sizes` in image and gallery
+- leave only fallback for map as it is now included in acf
+
 #### Bugfix
 - Fix post selection when using term template
 

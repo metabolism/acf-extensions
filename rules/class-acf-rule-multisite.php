@@ -29,6 +29,10 @@ if( ! class_exists('acf_rule_multisite') ) :
 			}
 		}
 
+		/**
+		 * @param $choices
+		 * @return mixed
+		 */
 		function acf_location_rule_type_multisite( $choices ) {
 
 			$choices[__('Misc')]['site'] = __('Site');
@@ -36,6 +40,10 @@ if( ! class_exists('acf_rule_multisite') ) :
 
 		}
 
+		/**
+		 * @param $choices
+		 * @return mixed
+		 */
 		function acf_location_rule_values_multisites( $choices ) {
 
 			$choices ['all'] = __('All');
@@ -49,6 +57,12 @@ if( ! class_exists('acf_rule_multisite') ) :
 			return $choices;
 		}
 
+		/**
+		 * @param $match
+		 * @param $rule
+		 * @param $options
+		 * @return bool
+		 */
 		function acf_location_rules_match_site( $match, $rule, $options ) {
 
 			$selected_site = (int) $rule['value'];

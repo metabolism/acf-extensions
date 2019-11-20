@@ -22,13 +22,17 @@ if( !class_exists('acf_rule_term_type') && function_exists('get_taxonomy_templat
 		 */
 		public function __construct()
 		{
-			if ( is_multisite() ) {
-				add_filter('acf/location/rule_types', [$this, 'acf_location_rule_type_term_template']);
-				add_filter('acf/location/rule_values/term_template',  [$this, 'acf_location_rule_values_term_templates']);
-				add_filter('acf/location/rule_match/term_template', [$this, 'acf_location_rules_match_term_template'], 10, 3);
-			}
+			add_filter('acf/location/rule_types', [$this, 'acf_location_rule_type_term_template']);
+			add_filter('acf/location/rule_values/term_template',  [$this, 'acf_location_rule_values_term_templates']);
+			add_filter('acf/location/rule_match/term_template', [$this, 'acf_location_rules_match_term_template'], 10, 3);
+			add_filter('acf/fields/post_object/query', [$this, 'acf_post_object_query'], 10, 3);
+
 		}
 
+		/**
+		 * @param $choices
+		 * @return mixed
+		 */
 		function acf_location_rule_type_term_template( $choices ) {
 
 			$choices[__('Misc')]['term_template'] = __('Term template');
@@ -36,6 +40,44 @@ if( !class_exists('acf_rule_term_type') && function_exists('get_taxonomy_templat
 
 		}
 
+		/**
+		 * @param $args
+		 * @param $field
+		 * @param $post_id
+		 * @return mixed
+		 */
+		function acf_post_object_query($args, $field, $post_id ) {
+
+			if( isset($args['tax_query']) ){
+
+				foreach ($args['tax_query'] as &$tax_query){
+
+					if( isset($tax_query['taxonomy']) && strpos($tax_query['taxonomy'], 'template_') === 0){
+
+						$tax_query['taxonomy'] = str_replace('template_', '', $tax_query['taxonomy']);
+
+						$terms = get_terms($tax_query['taxonomy']);
+						$templates = [];
+						foreach ($terms as $term){
+							$template = get_term_meta($term->term_id, 'template', true);
+							$templates[$template] = $term->slug;
+						}
+
+						foreach ($tax_query['terms'] as &$term){
+							if( isset($templates[$term]) )
+								$term = $templates[$term];
+						}
+					}
+				}
+			}
+
+			return $args;
+		}
+
+		/**
+		 * @param $choices
+		 * @return mixed
+		 */
 		function acf_location_rule_values_term_templates( $choices ) {
 
 			$choices ['all'] = __('All');
@@ -56,6 +98,12 @@ if( !class_exists('acf_rule_term_type') && function_exists('get_taxonomy_templat
 			return $choices;
 		}
 
+		/**
+		 * @param $match
+		 * @param $rule
+		 * @param $options
+		 * @return bool
+		 */
 		function acf_location_rules_match_term_template( $match, $rule, $options ) {
 
 			$template = $rule['value'];
@@ -79,4 +127,4 @@ if( !class_exists('acf_rule_term_type') && function_exists('get_taxonomy_templat
 
 	new acf_rule_term_type();
 
-	endif;
+endif;

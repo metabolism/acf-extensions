@@ -1,8 +1,8 @@
 <?php
 
-if( ! class_exists('acf_field_better_image') ) :
+if( ! class_exists('acf_field_image_extension') ) :
 
-	class acf_field_better_image {
+	class acf_field_image_extension {
 
         /**
          * Add image size pre-renderint
@@ -27,6 +27,6 @@ if( ! class_exists('acf_field_better_image') ) :
         }
 	}
 
-	new acf_field_better_image();
+	new acf_field_image_extension();
 
 endif; // class_exists check

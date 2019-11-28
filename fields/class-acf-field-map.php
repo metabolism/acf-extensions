@@ -1,8 +1,8 @@
 <?php
 
-if( ! class_exists('acf_field_better_map') ) :
+if( ! class_exists('acf_field_map_extension') ) :
 
-	class acf_field_better_map {
+	class acf_field_map_extension {
 
 		/**
 		 * When saving map, save also country and iso
@@ -103,6 +103,6 @@ if( ! class_exists('acf_field_better_map') ) :
 		}
 	}
 
-	new acf_field_better_map();
+	new acf_field_map_extension();
 
 endif; // class_exists check

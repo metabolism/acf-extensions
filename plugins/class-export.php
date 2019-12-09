@@ -39,10 +39,36 @@ if( ! class_exists('acf_export') ) :
 
 			if( $field  && $value ){
 
-				if ($field['type'] == 'image' || $field['type'] == 'file'){
+				if ($field['type'] == 'post_object'){
 
-					if( $path = wp_get_attachment_url($value) )
-						$value = 'attachment://'.ltrim($path, '/');
+					if( $post = get_post($value) ){
+
+						$value = 'post://'.$post->post_name.'@'.$post->post_type;
+					}
+				}
+				if ($field['type'] == 'taxonomy'){
+
+					if( $term = get_term($value) ){
+
+						$value = 'term://'.$term->name.'@'.$term->taxonomy;
+					}
+				}
+				if ($field['type'] == 'relationship'){
+
+					foreach ((array)$value as &$item){
+
+						if( $post = get_post($item) ){
+
+							$item = 'post://'.$post->post_name.'@'.$post->post_type;
+						}
+					}
+				}
+				elseif ($field['type'] == 'image' || $field['type'] == 'file'){
+
+					if( $url = wp_get_attachment_url($value) ){
+
+						$value = 'attachment://'.ltrim(str_replace(WP_HOME, '', $url), '/');
+					}
 				}
 				elseif ($field['type'] == 'gallery'){
 
@@ -51,8 +77,8 @@ if( ! class_exists('acf_export') ) :
 					if( is_array($value)){
 						foreach ($value as &$id){
 
-							if( $path = wp_get_attachment_url($id) )
-								$id = 'attachment://'.ltrim($path, '/');
+							if( $url = wp_get_attachment_url($id) )
+								$id = 'attachment://'.ltrim(str_replace(WP_HOME, '', $url), '/');
 						}
 
 						$value = serialize($value);

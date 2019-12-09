@@ -55,6 +55,8 @@ function include_acf_extensions_plugin() {
 
 	include_once('rules/class-acf-rule-multisite.php');
 	include_once('rules/class-acf-rule-tax-type.php');
+
+	include_once('plugins/class-export.php');
 }
 
 add_action('acf/include_field_types', 'include_acf_extensions_plugin');

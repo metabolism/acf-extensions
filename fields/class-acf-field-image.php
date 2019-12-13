@@ -4,10 +4,11 @@ if( ! class_exists('acf_field_image_extension') ) :
 
 	class acf_field_image_extension {
 
-        /**
-         * Add image size pre-renderint
-         * @return void
-         */
+		/**
+		 * Add image size pre-renderint
+		 * @param $field
+		 * @return void
+		 */
         public function addField($field)
         {
             acf_render_field_setting( $field, array(

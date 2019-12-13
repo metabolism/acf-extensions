@@ -3,6 +3,8 @@ CHANGELOG
 
 ##1.1.3
 #### Feature
+- added `tag` settings to text/textarea to let user choose html tag
+- added `public` settings to control entity variable visibility
 - added `sizes` in image and gallery
 - leave only fallback for map as it is now included in acf
 

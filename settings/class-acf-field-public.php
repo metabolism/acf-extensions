@@ -1,11 +1,12 @@
 <?php
 
-if( ! class_exists('acf_field_public_settings') ) :
+if( ! class_exists('acf_field_public') ) :
 
-	class acf_field_public_settings {
+	class acf_field_public {
 
 		/**
-		 * Add image size pre-renderint
+		 * define entity variable type public/private
+		 * @param $field
 		 * @return void
 		 */
 		public function addField($field)
@@ -24,10 +25,9 @@ if( ! class_exists('acf_field_public_settings') ) :
 		public function __construct()
 		{
 			add_action('acf/render_field_settings', [$this, 'addField']);
-			add_action('acf/render_field_settings', [$this, 'addField']);
 		}
 	}
 
-	new acf_field_public_settings();
+	new acf_field_public();
 
 endif; // class_exists check

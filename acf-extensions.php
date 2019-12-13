@@ -47,14 +47,16 @@ function include_acf_extensions_plugin() {
 	include_once('fields/class-acf-field-component.php');
 	include_once('fields/class-acf-field-components.php');
 	include_once('fields/class-acf-field-hidden.php');
+	include_once('fields/class-acf-field-image.php');
 	include_once('fields/class-acf-field-latest_posts.php');
 	include_once('fields/class-acf-field-link.php');
 	include_once('fields/class-acf-field-map.php');
-	include_once('fields/class-acf-field-image.php');
-	include_once('fields/class-acf-field-public-settings.php');
 
 	include_once('rules/class-acf-rule-multisite.php');
 	include_once('rules/class-acf-rule-tax-type.php');
+
+	include_once('settings/class-acf-field-public.php');
+	include_once('settings/class-acf-field-tag.php');
 
 	include_once('plugins/class-export.php');
 }

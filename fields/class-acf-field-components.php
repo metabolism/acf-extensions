@@ -173,9 +173,10 @@ if( ! class_exists('acf_field_components') ) :
 		/**
 		 * Initialize
 		 *
+		 * @param $field_group
+		 * @return  array
 		 * @since   1.0.13
 		 * @version 1.0.13
-		 * @return  array
 		 */
 		public function set_active_status($field_group)
 		{
@@ -522,8 +523,12 @@ if( ! class_exists('acf_field_components') ) :
 		/**
 		 * Show thumbnail in the title if available
 		 *
-		 * @since  1.0.0
+		 * @param $title
+		 * @param $field
+		 * @param $layout
+		 * @param $i
 		 * @return string
+		 * @since  1.0.0
 		 */
 		public function acf_flexible_content_layout_title_thumbnail( $title, $field, $layout, $i ) {
 
@@ -695,8 +700,9 @@ if( ! class_exists('acf_field_components') ) :
 		/**
 		 * Display slug form
 		 *
-		 * @since  1.0.0
+		 * @param $post
 		 * @return void
+		 * @since  1.0.0
 		 */
 		public function acf_extensions_add_slug($post) {
 			if($post->post_type == 'acf-field-group' && $post->post_status == 'acf-component'){
@@ -714,8 +720,11 @@ if( ! class_exists('acf_field_components') ) :
 		/**
 		 * Save slug to post_excerpt
 		 *
-		 * @since  1.0.0
+		 * @param $post_ID
+		 * @param $post
+		 * @param $update
 		 * @return void
+		 * @since  1.0.0
 		 */
 		public function acf_extensions_update_component($post_ID, $post, $update) {
 

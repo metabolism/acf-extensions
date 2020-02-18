@@ -1,8 +1,8 @@
 <?php
 
-if( ! class_exists('acf_field_better_link') ) :
+if( ! class_exists('acf_field_link_extension') ) :
 
-	class acf_field_better_link {
+	class acf_field_link_extension {
 
 
 		/**
@@ -71,6 +71,6 @@ if( ! class_exists('acf_field_better_link') ) :
 		}
 	}
 
-	new acf_field_better_link();
+	new acf_field_link_extension();
 
 endif; // class_exists check

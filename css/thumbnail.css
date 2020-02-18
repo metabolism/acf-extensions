@@ -20,13 +20,13 @@
 }
 
 .acf-fc-popup [data-layout]+span:after{
-    width: 0; height: 0; border-style: solid; border-width: 7.5px 0 7.5px 8px; border-color: transparent transparent transparent #ffffff;
+    width: 0; height: 0; border-style: solid; border-width: 7px 0 7px 8px; border-color: transparent transparent transparent #ffffff;
     position: absolute; left: 100%; top: 50%; margin-top: -5px; content: ''; z-index: 1;
 }
 
 
 .acf-fc-popup [data-layout]+span:before{
-    width: 0; height: 0; border-style: solid; border-width: 8.5px 0 8.5px 10px; border-color: transparent transparent transparent #ddd;
+    width: 0; height: 0; border-style: solid; border-width: 8px 0 8px 10px; border-color: transparent transparent transparent #ddd;
     position: absolute; left: 100%; top: 50%; margin-top: -5.5px; content: ''; z-index: 0;
 }
 

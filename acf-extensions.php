@@ -2,7 +2,7 @@
 /*
     Plugin Name: Advanced Custom Fields Extensions
     Description: Advanced Custom Fields add on. Create components, component field, hidden field and latest post field
-    Version: 1.1.0
+    Version: 1.1.3
     Author: Metabolism
     License: GPLv2 or later
     License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -47,12 +47,18 @@ function include_acf_extensions_plugin() {
 	include_once('fields/class-acf-field-component.php');
 	include_once('fields/class-acf-field-components.php');
 	include_once('fields/class-acf-field-hidden.php');
+	include_once('fields/class-acf-field-image.php');
 	include_once('fields/class-acf-field-latest_posts.php');
-	include_once('fields/class-acf-field-better_link.php');
-	include_once('fields/class-acf-field-better_map.php');
+	include_once('fields/class-acf-field-link.php');
+	include_once('fields/class-acf-field-map.php');
 
 	include_once('rules/class-acf-rule-multisite.php');
 	include_once('rules/class-acf-rule-tax-type.php');
+
+	include_once('settings/class-acf-field-public.php');
+	include_once('settings/class-acf-field-tag.php');
+
+	include_once('plugins/class-export.php');
 }
 
 add_action('acf/include_field_types', 'include_acf_extensions_plugin');

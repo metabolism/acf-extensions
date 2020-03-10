@@ -1,6 +1,10 @@
 CHANGELOG
 ---------
 
+##1.1.4
+#### Bugfix
+- Allow empty tag
+
 ##1.1.3
 #### Feature
 - added `tag` settings to text/textarea to let user choose html tag

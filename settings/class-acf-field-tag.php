@@ -41,9 +41,10 @@ if( ! class_exists('acf_field_tag') ) :
 		{
 			if( isset($field['tag']) && $field['tag'] ){
 
-				$tag = isset($field['selected_tag'])?$field['selected_tag']:'p';
+				$tag = isset($field['selected_tag'])?$field['selected_tag']:'';
 
 				echo '<div class="acf-tag-selector"><select name="'.str_replace('[value]', '[tag]', $field['name']).'">'.
+					  '<option value="">Tag</option>'.
 					  '<option value="h1" '.($tag=='h1'?'selected':'').'>H1</option>'.
 					  '<option value="h2" '.($tag=='h2'?'selected':'').'>H2</option>'.
 					  '<option value="h3" '.($tag=='h3'?'selected':'').'>H3</option>'.

@@ -1,6 +1,10 @@
 CHANGELOG
 ---------
 
+##1.1.5
+#### Feature
+- Latest post component allow multiple post_type
+
 ##1.1.4
 #### Bugfix
 - Allow empty tag

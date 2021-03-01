@@ -51,6 +51,7 @@ function include_acf_extensions_plugin() {
 	include_once('fields/class-acf-field-latest_posts.php');
 	include_once('fields/class-acf-field-link.php');
 	include_once('fields/class-acf-field-map.php');
+	include_once('fields/class-acf-field-dynamic_select.php');
 
 	include_once('rules/class-acf-rule-multisite.php');
 	include_once('rules/class-acf-rule-tax-type.php');

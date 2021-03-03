@@ -29,8 +29,11 @@ if( ! class_exists('acf_field_dynamic_select_extension') ) :
 
 					$choice = $other_field_value[$field_key[1]]??'';
 
-					if( strlen($choice) )
-						$choices[] = $other_field_value[$field_key[1]];
+					if( strlen($choice) ){
+
+						$choice = $other_field_value[$field_key[1]];
+						$choices[sanitize_title($choice)] = $choice;
+					}
 				}
 			}
 

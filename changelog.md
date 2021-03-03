@@ -1,6 +1,10 @@
 CHANGELOG
 ---------
 
+##1.1.7
+#### Bugfix
+- invalid `dynamic_select` component value
+
 ##1.1.6
 #### Feature
 - added `dynamic_select` component, list values from other field in post or in options

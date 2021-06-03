@@ -1,6 +1,10 @@
 CHANGELOG
 ---------
 
+##1.1.8
+#### Feature
+- added fields cleaning function, add ?clean-acf=1 in a backend url
+
 ##1.1.7
 #### Bugfix
 - invalid `dynamic_select` component value

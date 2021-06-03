@@ -1,6 +1,22 @@
 CHANGELOG
 ---------
 
+##1.1.8
+#### Feature
+- added fields cleaning function, add ?clean-acf=1 in a backend url
+
+##1.1.7
+#### Bugfix
+- invalid `dynamic_select` component value
+
+##1.1.6
+#### Feature
+- added `dynamic_select` component, list values from other field in post or in options
+
+##1.1.5
+#### Feature
+- Latest post component allow multiple post_type
+
 ##1.1.4
 #### Bugfix
 - Allow empty tag

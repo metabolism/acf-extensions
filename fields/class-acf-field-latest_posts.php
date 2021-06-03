@@ -72,9 +72,9 @@ if( ! class_exists('acf_field_latest_posts') ) :
 				'type'			=> 'select',
 				'name'			=> 'post_type',
 				'choices'		=> acf_get_pretty_post_types(),
-				'multiple'		=> 0,
-				'ui'			=> 0,
-				'allow_null'	=> 1,
+				'multiple'		=> 1,
+				'ui'			=> 1,
+				'allow_null'	=> 0,
 				'placeholder'	=> __("All post types",'acf'),
 			));
 

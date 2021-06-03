@@ -51,6 +51,7 @@ function include_acf_extensions_plugin() {
 	include_once('fields/class-acf-field-latest_posts.php');
 	include_once('fields/class-acf-field-link.php');
 	include_once('fields/class-acf-field-map.php');
+	include_once('fields/class-acf-field-dynamic_select.php');
 
 	include_once('rules/class-acf-rule-multisite.php');
 	include_once('rules/class-acf-rule-tax-type.php');
@@ -62,6 +63,30 @@ function include_acf_extensions_plugin() {
 }
 
 add_action('acf/include_field_types', 'include_acf_extensions_plugin');
+
+add_action('acf/init', function (){
+
+    if( isset($_GET['clean-acf']) && $_GET['clean-acf'] && is_admin() && current_user_can('administrator')){
+
+        $folder = apply_filters('acf/settings/save_json', '');
+
+        foreach (glob($folder."/*.*") as $filename) {
+
+            $content = json_decode(file_get_contents($filename), true);
+            foreach($content['fields'] as $i=>$field){
+
+                if(!($field['key']??false) || empty($field))
+                    unset($content['fields'][$i]);
+            }
+            file_put_contents($filename, json_encode($content, JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE));
+        }
+
+        global $wpdb;
+
+        $wpdb->query("DELETE pm FROM $wpdb->postmeta pm LEFT JOIN $wpdb->posts wp ON wp.ID = pm.post_id WHERE wp.ID IS NULL");
+        $wpdb->query("DELETE FROM $wpdb->posts WHERE post_type='acf-field'");
+    }
+});
 
 add_filter( 'mce_external_plugins', function ( $plugins ) {
 	$plugins['table'] = content_url() . '/plugins/acf-extensions/js/tinymce/table/plugin.min.js';

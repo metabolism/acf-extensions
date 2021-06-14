@@ -1,6 +1,10 @@
 CHANGELOG
 ---------
 
+##1.1.9
+#### Feature
+- added id field, generate uniqid
+
 ##1.1.8
 #### Feature
 - added fields cleaning function, add ?clean-acf=1 in a backend url

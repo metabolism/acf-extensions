@@ -1,6 +1,6 @@
 {
   "name":"metabolism/acf-extensions",
-  "version": "1.1.8",
+  "version": "1.1.9",
   "type": "wordpress-plugin",
   "description": "ACF Extensions plugin with component, components, hidden field, dynamic select and latest posts field",
   "license": "GPL-3.0-or-later"

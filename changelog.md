@@ -1,6 +1,10 @@
 CHANGELOG
 ---------
 
+##1.1.10
+#### Feature
+- added instagram post url
+
 ##1.1.9
 #### Feature
 - added id field, generate uniqid

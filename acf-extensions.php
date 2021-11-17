@@ -2,7 +2,7 @@
 /*
     Plugin Name: Advanced Custom Fields Extensions
     Description: Advanced Custom Fields add on. Create components, component field, hidden field and latest post field
-    Version: 1.1.10
+    Version: 1.1.11
     Author: Metabolism
     License: GPLv2 or later
     License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -56,6 +56,7 @@ function include_acf_extensions_plugin() {
 	include_once('fields/class-acf-field-instagram_post.php');
 
 	include_once('rules/class-acf-rule-multisite.php');
+	include_once('rules/class-acf-rule-parent-post.php');
 	include_once('rules/class-acf-rule-tax-type.php');
 
 	include_once('settings/class-acf-field-public.php');

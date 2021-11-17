@@ -1,69 +1,37 @@
 <?php
 
-if( ! class_exists('acf_rule_multisite') ) :
+if ( ! class_exists( 'ACF_Location_Multisite' ) ) :
 
-	/**
-	 * ACF Rule Multisite
-	 *
-	 * Add a rule to select blog id
-	 *
-	 * @since       1.0.0
-	 * @version     1.0.14
-	 * @class       acf_rule_multisite
-	 */
-	class acf_rule_multisite
-	{
+	class ACF_Location_Multisite extends ACF_Location {
+
 		/**
-		 * Constructor
+		 * Initializes props.
 		 *
-		 * @since   1.0.0
-		 * @version 1.0.14
+		 * @date    5/03/2014
+		 * @since   5.0.0
+		 *
+		 * @param   void
 		 * @return  void
 		 */
-		public function __construct()
-		{
-			if ( is_multisite() ) {
-				add_filter('acf/location/rule_types', [$this, 'acf_location_rule_type_multisite']);
-				add_filter('acf/location/rule_values/site',  [$this, 'acf_location_rule_values_multisites']);
-				add_filter('acf/location/rule_match/site', [$this, 'acf_location_rules_match_site'], 10, 3);
-			}
+		public function initialize() {
+			$this->name        = 'site';
+			$this->label       = __( 'Site', 'acf' );
+			$this->category    = 'Misc';
+			$this->object_type = 'blog';
 		}
 
 		/**
-		 * @param $choices
-		 * @return mixed
+		 * Matches the provided rule against the screen args returning a bool result.
+		 *
+		 * @date    9/4/20
+		 * @since   5.9.0
+		 *
+		 * @param   array $rule The location rule.
+		 * @param   array $screen The screen args.
+		 * @param   array $field_group The field group settings.
+		 * @return  bool
 		 */
-		function acf_location_rule_type_multisite( $choices ) {
-
-			$choices[__('Misc')]['site'] = __('Site');
-			return $choices;
-
-		}
-
-		/**
-		 * @param $choices
-		 * @return mixed
-		 */
-		function acf_location_rule_values_multisites( $choices ) {
-
-			$choices ['all'] = __('All');
-			$sites = get_sites();
-
-			/** @var \WP_Site $site */
-			foreach($sites as $site ) {
-				$choices[ $site->blog_id ] = $site->blogname;
-			}
-
-			return $choices;
-		}
-
-		/**
-		 * @param $match
-		 * @param $rule
-		 * @param $options
-		 * @return bool
-		 */
-		function acf_location_rules_match_site( $match, $rule, $options ) {
+		public function match( $rule, $screen, $field_group ) {
 
 			$selected_site = (int) $rule['value'];
 
@@ -79,8 +47,31 @@ if( ! class_exists('acf_rule_multisite') ) :
 
 			return $match;
 		}
+
+		/**
+		 * Returns an array of possible values for this rule type.
+		 *
+		 * @date    9/4/20
+		 * @since   5.9.0
+		 *
+		 * @param   array $rule A location rule.
+		 * @return  array
+		 */
+		public function get_values( $rule ) {
+
+			$choices ['all'] = __('All');
+			$sites = get_sites();
+
+			/** @var \WP_Site $site */
+			foreach($sites as $site ) {
+				$choices[ $site->blog_id ] = $site->blog_id.' : '.$site->blogname;
+			}
+
+			return $choices;
+		}
 	}
 
-	new acf_rule_multisite();
+	// initialize
+	acf_register_location_type( 'ACF_Location_Multisite' );
 
-	endif;
+endif; // class_exists check

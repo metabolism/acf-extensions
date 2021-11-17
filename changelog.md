@@ -1,6 +1,10 @@
 CHANGELOG
 ---------
 
+##1.1.11
+#### Feature
+- added post parent location rule
+
 ##1.1.10
 #### Feature
 - added instagram post url

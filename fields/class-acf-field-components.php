@@ -546,11 +546,6 @@ if( ! class_exists('acf_field_components') ) :
 				'acf-group-component_thumbnail',
 				"{$dir}css/thumbnail.css"
 			);
-
-			wp_enqueue_style(
-				'acf-group-component_preview',
-				"{$url}/build/components.css"
-			);
 		}
 
 		/**

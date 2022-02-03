@@ -134,6 +134,9 @@ register_deactivation_hook(__FILE__, 'deactivate_acf_extensions_plugin');
  */
 function activate_acf_extensions_plugin() {
 
+    if( !function_exists('acf_get_field_group') )
+        return;
+
     $args = array(
         'posts_per_page' => -1,
         'post_type'      => 'acf-field-group',

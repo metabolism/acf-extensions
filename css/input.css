@@ -4,3 +4,15 @@
 .acf-tag-selector select{ width: auto!important; padding: 0 8px!important; padding-right: 30px!important; min-height: 22px; font-size: 11px!important; }
 
 .acf-instagram_post img{ width: 150px; height: 150px; object-fit: cover; margin-top: 5px }
+
+.acf-flexible-opened-actions{ background: #f9f9f9; border-top: 1px solid #e1e1e1; padding: 12px; text-align: right; clear: both }
+
+.acf-flexible-preview-wrapper{ position: relative; cursor: pointer }
+.-collapsed .acf-flexible-preview-wrapper{ display: none!important }
+.acf-flexible-content .layout .acf-fc-layout-controls .acf-icon.-preview, .acf-flexible-content .layout .acf-fc-layout-controls .acf-icon.-edit{ visibility: hidden }
+.acf-flexible-content .layout:hover .acf-fc-layout-controls .acf-icon.-preview, .acf-flexible-content .layout:hover .acf-fc-layout-controls .acf-icon.-edit{ visibility: visible }
+.wp-core-ui .acf-flexible-preview-edit.button{
+    padding: 0; width: 32px; height: 32px; display: inline-flex; justify-content: center; align-items: center; border-radius: 50%;
+    position: absolute; left: 50%; top: 50%; margin-left: -16px; margin-top: -16px;
+}
+/*.acf-flexible-content .layout .acf-fields{ display: none }*/

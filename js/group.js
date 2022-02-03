@@ -1,10 +1,6 @@
 ;(function($) {
 
-    // append the overlay mockup
-    $("#acf-field-group-locations .inside").append('<div class="acf-component-disabled-overlay"></div>');
-    $("#acf-field-group-options .inside").append('<div class="acf-component-disabled-overlay"></div>');
-
-    // put a white overlay when the component checkbox is checked.
+    // Hide options group
     $('#is_acf_component_checkbox').on('change', function() {
 
         if($(this).is(":checked")) {

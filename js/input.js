@@ -22,11 +22,22 @@
         };
 
         $.post(ajaxurl, ajaxData, function (response){
+
             $layout.find('.acf-flexible-preview-wrapper').html(response)
         })
     }
 
     $(document).ready(function (){
+
+        $('.acf-components-collapse').click(function (){
+
+            $(this).closest('.acf-field-flexible-content').find('.layout').addClass('-collapsed')
+        });
+
+        $('.acf-components-expand').click(function (){
+
+            $(this).closest('.acf-field-flexible-content').find('.layout').removeClass('-collapsed')
+        });
 
         $('.acf-field-flexible-content').each(function (){
 
@@ -34,11 +45,14 @@
 
             if( $preview.val() === '1'){
 
+                $(this).addClass('acf-components-preview')
+
                 $(this).find('.layout').each(function (){
 
                     var $layout = $(this)
                     var $fields = $(this).find('.acf-fields')
                     var $controls = $(this).find('.acf-fc-layout-controls')
+
 
                     $controls.prepend('<a class="acf-icon -preview small light acf-js-tooltip dashicons-visibility" title="Afficher l\'apercu"></a>');
                     $controls.prepend('<a class="acf-icon -edit small light acf-js-tooltip dashicons-edit" title="Modifier"></a>');

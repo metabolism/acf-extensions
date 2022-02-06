@@ -77,6 +77,7 @@ if( ! class_exists('acf_field_components') ) :
 
 			//add featured image in title if available
 			add_filter('acf/fields/flexible_content/layout_title', array($this, 'acf_flexible_content_layout_title_thumbnail'), 10, 4);
+			add_filter('acf/fields/flexible_content/layout_title', array($this, 'acf_flexible_content_layout_title_preview'), 9, 4);
 
 			// handle slug
 			add_action('edit_form_before_permalink', array($this, 'acf_extensions_add_slug'));
@@ -188,6 +189,7 @@ if( ! class_exists('acf_field_components') ) :
                     )
                 );
 
+                echo '<div class="acf-components-actions"><a class="acf-components-collapse dashicons dashicons-arrow-up-alt2 acf-js-tooltip" title="Collapse all"></a><a class="acf-components-expand dashicons dashicons-arrow-down-alt2 acf-js-tooltip" title="Expand all"></a></div>';
                 echo '<script type="text-html" class="tmpl-popup tmpl-popup-components"><ul>';
 
 				foreach( $field['layouts'] as $layout ){
@@ -621,7 +623,31 @@ if( ! class_exists('acf_field_components') ) :
 			}
 
 			return $title;
+		}
 
+
+		/**
+		 * Show thumbnail in the title if available
+		 *
+		 * @param $title
+		 * @param $field
+		 * @param $layout
+		 * @param $i
+		 * @return string
+		 * @since  1.0.0
+		 */
+		public function acf_flexible_content_layout_title_preview( $title, $field, $layout, $i ) {
+
+            $preview = '';
+            $values = $_POST['value'] ?? $field['value'][$i];
+
+            foreach($layout['sub_fields'] as $sub_field){
+
+                if( in_array($sub_field['type'],['text','wysiwyg','textarea']) && !empty($values[$sub_field['key']]??'') && is_string($values[$sub_field['key']]) )
+                    $preview .= ' '.strip_tags($values[$sub_field['key']]);
+            }
+
+			return '<span class="acf-component-title">'.$title.'</span><span class="acf-component-preview-title">'.(!empty($preview)?' : '.substr($preview,0,100):'').'</span>';
 		}
 
 

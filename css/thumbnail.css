@@ -1,5 +1,13 @@
 .acf-fc-layout-handle .thumbnail{
-    position: relative; display: inline-block; width: 44px; margin-right: 15px; height: 15px; margin-bottom: -20px; margin-left: 2px;
+    position: relative; display: inline-block; width: 40px; margin-right: 15px; height: 15px; margin-bottom: -18px; margin-left: 2px;
+}
+
+.acf-components-preview .layout.-collapsed .acf-fc-layout-handle .thumbnail{
+    display: inline-block;
+}
+
+.acf-components-preview .layout .acf-fc-layout-handle .thumbnail{
+    display: none;
 }
 
 .acf-fc-layout-handle .thumbnail .small{
@@ -8,7 +16,7 @@
 
 .acf-fc-layout-handle .thumbnail .large{
     position: absolute; left: 0; bottom: 0; pointer-events: none; display: none; transform: translateY(50%); z-index: 999;
-    border: 1px solid #ddd; padding: 5px; background: #fff; max-width:600px; height: auto; box-shadow: 0 0 10px rgba(0,0,0,0.08);
+    border: 1px solid #ddd; padding: 5px; background: #fff; max-width:500px; height: auto; box-shadow: 0 0 10px rgba(0,0,0,0.08);
 }
 
 .acf-fc-layout-handle .thumbnail:hover .large{ display: block }
@@ -16,7 +24,7 @@
 
 .acf-fc-popup [data-layout]+span{
     position: absolute; right: 100%; top: 50%; transform: translateY(-50%); display: none; margin-right: 10px;
-    border: 1px solid #ddd; padding: 5px; background: #fff; max-width:600px; box-shadow: 0 0 10px rgba(0,0,0,0.08);
+    border: 1px solid #ddd; padding: 5px; background: #fff; max-width:500px; box-shadow: 0 0 10px rgba(0,0,0,0.08);
 }
 
 .acf-fc-popup [data-layout]+span:after{
@@ -33,7 +41,7 @@
 .acf-fc-popup li:hover [data-layout]+span{
     display: block;
 }
-.acf-fc-popup [data-layout]+span img{ max-width:600px; width: auto; height: auto; display: block }
+.acf-fc-popup [data-layout]+span img{ max-width:500px; width: auto; height: auto; display: block }
 
 .postbox{ box-shadow: none }
 .postbox.closed .hndle{ border-bottom: 0 }

@@ -15,4 +15,9 @@
     padding: 0; width: 32px; height: 32px; display: inline-flex; justify-content: center; align-items: center; border-radius: 50%;
     position: absolute; left: 50%; top: 50%; margin-left: -16px; margin-top: -16px;
 }
+.acf-component-title{ display: inline-block; vertical-align: middle }
+.acf-component-preview-title{ white-space: nowrap; overflow: hidden; width: 50%; text-overflow: ellipsis; display: inline-block; vertical-align: middle; margin-left: 0.4em }
+
+.acf-components-actions{ position: absolute; bottom: 100%; right: 0}
+.acf-components-actions a{ color: inherit; cursor: pointer; font-size: 16px  }
 /*.acf-flexible-content .layout .acf-fields{ display: none }*/

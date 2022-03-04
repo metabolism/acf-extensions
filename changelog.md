@@ -1,6 +1,10 @@
 CHANGELOG
 ---------
 
+##1.1.12
+#### Bugfix
+- Fix uniqid field
+
 ##1.1.11
 #### Feature
 - added post parent location rule

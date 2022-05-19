@@ -46,18 +46,19 @@
 
             if( $collapse.val() === '1'){
 
-                $(this).on('click', ' [data-name="collapse-layout"]', function( e ){
+                $(this).on('click', '[data-name="collapse-layout"]', function( e ){
 
                     var $this = $(e.target);
                     var $layout = $this.closest('.layout');
-                    var pos = $layout.offset().top-$(window).scrollTop();
 
                     if( !$layout.hasClass('-collapsed') ){
 
                         $this.closest('.acf-flexible-content').find('.layout').not($layout).addClass('-collapsed');
+
                         setTimeout(function (){
-                            var new_pos = $layout.offset().top;
-                            window.scrollTo(0,new_pos-pos)
+                            var pos = $layout.offset().top;
+                            if( pos-$(window).scrollTop() < 0 )
+                                window.scrollTo(0,pos-70)
                         })
                     }
                 });

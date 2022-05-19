@@ -42,6 +42,26 @@
         $('.acf-field-flexible-content').each(function (){
 
             var $preview = $(this).find('input[name="preview['+$(this).data('key')+']"]')
+            var $collapse = $(this).find('input[name="collapse['+$(this).data('key')+']"]')
+
+            if( $collapse.val() === '1'){
+
+                $(this).on('click', ' [data-name="collapse-layout"]', function( e ){
+
+                    var $this = $(e.target);
+                    var $layout = $this.closest('.layout');
+                    var pos = $layout.offset().top-$(window).scrollTop();
+
+                    if( !$layout.hasClass('-collapsed') ){
+
+                        $this.closest('.acf-flexible-content').find('.layout').not($layout).addClass('-collapsed');
+                        setTimeout(function (){
+                            var new_pos = $layout.offset().top;
+                            window.scrollTo(0,new_pos-pos)
+                        })
+                    }
+                });
+            }
 
             if( $preview.val() === '1'){
 

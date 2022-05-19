@@ -185,7 +185,14 @@ if( ! class_exists('acf_field_components') ) :
                 acf_hidden_input(
                     array(
                         'name' => 'preview['.$field['key'] . ']',
-                        'value' => $field['preview'],
+                        'value' => $field['preview']??0
+                    )
+                );
+
+                acf_hidden_input(
+                    array(
+                        'name' => 'collapse['.$field['key'] . ']',
+                        'value' => $field['collapse']??0
                     )
                 );
 
@@ -293,6 +300,14 @@ if( ! class_exists('acf_field_components') ) :
 				'label'         => __('Preview', 'acf'),
 				'instructions'  => '',
 				'name'          => 'preview',
+                'type'			=> 'true_false',
+                'ui'			=> 1,
+			));
+
+			acf_render_field_setting($field, array(
+				'label'         => __('Auto collapse', 'acf'),
+				'instructions'  => '',
+				'name'          => 'collapse',
                 'type'			=> 'true_false',
                 'ui'			=> 1,
 			));
@@ -847,7 +862,7 @@ if( ! class_exists('acf_field_components') ) :
 			if ($field_group = acf_get_field_group($group_key)) {
 
 				$thumbnail_id = isset($field_group['thumbnail_id'])?$field_group['thumbnail_id']:false;
-				
+
 				if(!$thumbnail_id && isset($field_group['ID']) && $field_group['ID'])
 					$thumbnail_id = get_post_thumbnail_id($field_group['ID']);
 

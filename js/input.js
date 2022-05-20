@@ -46,6 +46,8 @@
 
             if( $collapse.val() === '1'){
 
+                $(this).find('.layout:not(.-collapsed)').slice(1).addClass('-collapsed')
+
                 $(this).on('click', '[data-name="collapse-layout"]', function( e ){
 
                     var $this = $(e.target);

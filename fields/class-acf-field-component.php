@@ -84,8 +84,15 @@ if( ! class_exists('acf_field_component') ) :
 
 			$field = parent::acf_clone_field($field, $clone_field);
 
-			if( $display == 'group' )
-				$field['name'] = $field['__name'] = $name.'_'.$field['name'];
+			if( $display == 'group' ){
+
+                $field['name'] = $field['__name'] = $name.'_'.$field['name'];
+            }
+            else{
+
+                $field['prefix'] = 'acf';
+                $field['key'] = $field['__key'];
+            }
 
 			return $field;
 		}

@@ -1,4 +1,4 @@
-.acf-field-hidden, .acf-field-latest-posts, .acf-field-id{ display: none; }
+.acf-field-hidden, .acf-field-latest-posts, .acf-field-id, .acf-field-children{ display: none; }
 .acf-field .acf-label:empty{ display: none }
 .acf-tag-selector{ position: absolute; right: 0; bottom: 100%; width: auto; margin-bottom: 6px }
 .acf-tag-selector select{ width: auto!important; padding: 0 8px!important; padding-right: 30px!important; min-height: 22px; font-size: 11px!important; }
@@ -21,3 +21,4 @@
 .acf-components-actions{ position: absolute; bottom: 100%; right: 0}
 .acf-components-actions a{ color: inherit; cursor: pointer; font-size: 16px  }
 /*.acf-flexible-content .layout .acf-fields{ display: none }*/
+#side-sortables .acf-fields>.acf-field{ width: 100%!important; }

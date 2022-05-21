@@ -59,6 +59,8 @@ if( ! class_exists('acf_field_link_extension') ) :
 					acf_update_metadata( $post_id, $field['name'], $field['key'], true );
 					acf_flush_value_cache( $post_id, $field['name'] );
 				}
+
+                $value['link'] = $value['url'];
 			}
 
 			return $value;

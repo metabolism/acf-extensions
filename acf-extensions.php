@@ -59,7 +59,6 @@ function include_acf_extensions_plugin() {
 	include_once('rules/class-acf-rule-parent-post.php');
 	include_once('rules/class-acf-rule-tax-type.php');
 
-	include_once('settings/class-acf-field-public.php');
 	include_once('settings/class-acf-field-tag.php');
 
 	include_once('plugins/class-export.php');

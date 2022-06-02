@@ -21,36 +21,49 @@ if( ! class_exists('acf_field_instagram_post') ) :
 				if( ($current_value['url']??'') == $value )
 					return $current_value;
 
-				if( !empty($value) ){
+                if( !empty($value) ){
 
-					$response = wp_remote_get('http://api.instagram.com/oembed?url='.$value);
+                    preg_match_all('/\/p\/(.+)\/.*/m', $value, $matches, PREG_SET_ORDER, 0);
 
-					if ( is_array( $response ) && ! is_wp_error( $response ) ) {
+                    if( !count($matches) || count($matches[0]) != 2)
+                        return false;
 
-						$body = json_decode($response['body'], true);
-						$filepath = ABSPATH . UPLOADS.'/instagram/'.$body['media_id'].'.jpg';
-						@file_put_contents($filepath, @file_get_contents($body['thumbnail_url']));
+                    $filepath = ABSPATH . UPLOADS.'/instagram/'.$matches[0][1].'.jpg';
+                    @file_put_contents($filepath, @file_get_contents('https://www.instagram.com/p/'.$matches[0][1].'/media?size='.($field['size']??'m')));
 
-						if( file_exists($filepath) ){
+                    if( file_exists($filepath) ){
 
-							$wp_upload_dir = wp_upload_dir();
-							$file_url = str_replace($wp_upload_dir['basedir'], $wp_upload_dir['baseurl'], $filepath);
+                        $wp_upload_dir = wp_upload_dir();
+                        $file_url = str_replace($wp_upload_dir['basedir'], $wp_upload_dir['baseurl'], $filepath);
 
-							$body['thumbnail_url'] = $file_url;
-						}
+                        $body['thumbnail_url'] = $file_url;
+                    }
 
-						$value = [
-							'url'=>$value,
-							'title'=>$body['title'],
-							'thumbnail'=>$body['thumbnail_url'],
-							'author_name'=>$body['author_name']
-						];
-					}
-				}
-			}
+                    $value = [
+                        'url'=>$value,
+                        'title'=>'Instagram post',
+                        'thumbnail'=>$body['thumbnail_url'],
+                        'author_name'=>''
+                    ];
+                }
+            }
 
 			return $value;
 		}
+
+        function render_field_settings( $field ) {
+
+            // display
+            acf_render_field_setting( $field, array(
+                'label'			=> __('Size','acf'),
+                'type'			=> 'select',
+                'name'			=> 'size',
+                'choices'		=> array(
+                    'm'		=> __('Small','acf'),
+                    'l'		=> __('Large','acf'),
+                ),
+            ));
+        }
 
 		/*
 		*  initialize
@@ -72,6 +85,7 @@ if( ! class_exists('acf_field_instagram_post') ) :
 			$this->label = __("Instagram post",'acf');
 			$this->defaults = array(
 				'default_value'	=> '',
+				'size'	=> 'm',
 				'placeholder'	=> 'https://www.instagram.com/p/xxxyyyzzz/'
 			);
 		}

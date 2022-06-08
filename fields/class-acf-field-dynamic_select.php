@@ -18,10 +18,23 @@ if( ! class_exists('acf_field_dynamic_select_extension') ) :
 			}
 			else{
 
-				$other_field_values = get_field($field_key[0]);
+                if( $post_id = $_GET['post']??false ){
+
+                    $other_field_values = get_field($field_key[0], $post_id);
+
+                    if( is_null($other_field_values) )
+                        $other_field_values = get_post_meta($post_id,  $field_key[0]);
+                }
+                elseif( $term_id = $_GET['tag_ID']??false ){
+
+                    $other_field_values = get_field($field_key[0], $_GET['taxonomy'].'_'.$term_id);
+
+                    if( is_null($other_field_values) )
+                        $other_field_values = get_term_meta($term_id,  $field_key[0]);
+                }
 			}
 
-			$choices = array();
+			$choices = $other_field_values;
 
 			if( count($field_key) == 2 ){
 

@@ -10,6 +10,7 @@ if( ! class_exists('acf_field_dynamic_select_extension') ) :
 			$value = acf_get_array($field['value']);
 
 			$field_key = explode('.', $field['field_key']);
+            $other_field_values = [];
 
 			if( $field_key[0] == 'options'){
 
@@ -27,7 +28,7 @@ if( ! class_exists('acf_field_dynamic_select_extension') ) :
                 }
                 elseif( $term_id = $_GET['tag_ID']??false ){
 
-                    $other_field_values = get_field($field_key[0], $_GET['taxonomy'].'_'.$term_id);
+                    $other_field_values = get_field($field_key[0], 'term_'.$term_id);
 
                     if( is_null($other_field_values) )
                         $other_field_values = get_term_meta($term_id,  $field_key[0]);

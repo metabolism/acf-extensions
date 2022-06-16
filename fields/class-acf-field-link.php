@@ -61,9 +61,6 @@ if( ! class_exists('acf_field_link_extension') ) :
 				}
 			}
 
-            if( $value['url']??false )
-                $value['link'] = $value['url'];
-
             return $value;
 		}
 

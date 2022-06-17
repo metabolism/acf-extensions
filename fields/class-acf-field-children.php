@@ -30,7 +30,7 @@ if( ! class_exists('acf_field_children') ) :
 		function format_value( $value, $post_id, $field ) {
 
             $type = get_post_type($post_id);
-            $query = new \WP_Query(['post_parent'=>$post_id, 'post_type'=>$type, 'posts_per_page'=>-1]);
+            $query = new \WP_Query(['post_parent'=>$post_id, 'post_type'=>$type, 'posts_per_page'=>-1, 'order'=>'ASC', 'orderby'=>'menu_order']);
 
 			if( !isset($query->posts) || !is_array($query->posts) )
 				return [];

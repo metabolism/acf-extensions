@@ -15,7 +15,7 @@
 }
 
 .acf-fc-layout-handle .thumbnail .large{
-    position: absolute; left: 0; bottom: 0; pointer-events: none; display: none; transform: translateY(50%); z-index: 999;
+    position: absolute; left: 0; bottom: 22px; pointer-events: none; display: none; transform: translateY(50%); z-index: 999;
     border: 1px solid #ddd; padding: 5px; background: #fff; max-width:500px; height: auto; box-shadow: 0 0 10px rgba(0,0,0,0.08);
 }
 

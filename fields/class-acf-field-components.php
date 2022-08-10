@@ -658,8 +658,13 @@ if( ! class_exists('acf_field_components') ) :
 
             foreach($layout['sub_fields'] as $sub_field){
 
-                if( in_array($sub_field['type'],['text','wysiwyg','textarea']) && !empty($values[$sub_field['key']]??'') && is_string($values[$sub_field['key']]) )
-                    $preview .= ' '.strip_tags($values[$sub_field['key']]);
+				$value = $values[$sub_field['key']]['value']??$values[$sub_field['key']]??'';
+
+				if( in_array($sub_field['type'],['text','wysiwyg','textarea']) && !empty($value) && is_string($value) ){
+
+	                $preview = strip_tags($value);
+	                break;
+				}
             }
 
 			return '<span class="acf-component-title">'.$title.'</span><span class="acf-component-preview-title">'.(!empty($preview)?' : '.substr($preview,0,100):'').'</span>';

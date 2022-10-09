@@ -7,7 +7,7 @@
 
 .acf-flexible-opened-actions{ background: #f9f9f9; border-top: 1px solid #e1e1e1; padding: 12px; text-align: right; clear: both }
 
-.acf-field.acf-field-flexible-content{ padding-top: 20px!important }
+.acf-field.acf-field-flexible-content{ padding-top: 30px!important }
 .acf-flexible-preview-wrapper{ position: relative; cursor: pointer }
 .-collapsed .acf-flexible-preview-wrapper{ display: none!important }
 .acf-flexible-content .layout .acf-fc-layout-controls .acf-icon.-preview, .acf-flexible-content .layout .acf-fc-layout-controls .acf-icon.-edit{ visibility: hidden }

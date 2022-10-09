@@ -2,7 +2,7 @@
 /*
     Plugin Name: Advanced Custom Fields Extensions
     Description: Advanced Custom Fields add on. Create components, component field, hidden field and latest post field
-    Version: 1.2.1
+    Version: 1.2.2
     Author: Metabolism
     License: GPLv2 or later
     License URI: http://www.gnu.org/licenses/gpl-2.0.html

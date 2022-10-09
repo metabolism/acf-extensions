@@ -1,9 +1,9 @@
 CHANGELOG
 ---------
 
-##1.1.12
+##1.2.2
 #### Bugfix
-- Fix uniqid field
+- id field, generated uniqid
 
 ##1.1.11
 #### Feature

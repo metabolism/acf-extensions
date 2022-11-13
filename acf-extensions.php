@@ -57,6 +57,7 @@ function include_acf_extensions_plugin() {
 
 	include_once('rules/class-acf-rule-multisite.php');
 	include_once('rules/class-acf-rule-parent-post.php');
+	include_once('rules/class-acf-location-term-type.php');
 	include_once('rules/class-acf-rule-tax-type.php');
 	include_once('rules/class-acf-rule-nav-menu-item-depth.php');
 

@@ -82,56 +82,9 @@ if( ! class_exists('acf_field_components') ) :
             // handle slug
             add_action('edit_form_before_permalink', array($this, 'acf_extensions_add_slug'));
             add_action('wp_insert_post', array($this, 'acf_extensions_update_component'), 10, 3 );
-            
-            add_action('wp_ajax_acf/flexible/layout_preview', array($this, 'layout_preview'));
-            
+
             // called the base, no parent, cause we're hacking the repeater
             acf_field::__construct();
-        }
-        
-        /**
-         * Render component preview
-         *
-         * @return void
-         */
-        public function layout_preview(){
-            
-            $options = acf_parse_args($_POST, array(
-                'post_id'   => 0,
-                'i'         => 0,
-                'field_key' => '',
-                'nonce'     => '',
-                'layout'    => '',
-                'value'     => array()
-            ));
-            
-            $layout = false;
-            
-            // Load field
-            if( $field = acf_get_field($options['field_key']) ){
-                
-                $instance = acf_get_field_type('flexible_content');
-                
-                if( $layout = $instance->get_layout($options['layout'], $field) ){
-                    
-                    foreach ($layout['sub_fields'] as &$sub_field)
-                        $sub_field['value'] = $options['value'][$sub_field['key']]??'';
-                    
-                    $layout['type'] = 'clone';
-                    $layout['display'] = 'group';
-                }
-            }
-            
-            $html = apply_filters('acf/flexible/layout_preview', $layout, $options['post_id'], $options);
-            
-            if( empty($html) || !is_string($html) )
-                $html = '<div class="acf-flexible-preview-empty">Component preview is not available</div>';
-            
-            $html = '<div class="acf-flexible-preview">'.$html.'</div><a class="button acf-flexible-preview-edit"><span class="dashicons dashicons-edit"></span></a>';
-            
-            echo $html;
-            
-            exit;
         }
         
         /**
@@ -181,13 +134,6 @@ if( ! class_exists('acf_field_components') ) :
         function render_field( $field ) {
             
             if( $field['type'] === 'flexible_content' ){
-                
-                acf_hidden_input(
-                    array(
-                        'name' => 'preview['.$field['key'] . ']',
-                        'value' => $field['preview']??0
-                    )
-                );
                 
                 acf_hidden_input(
                     array(
@@ -294,14 +240,6 @@ if( ! class_exists('acf_field_components') ) :
                 'instructions'  => '',
                 'type'          => 'text',
                 'name'          => 'button_label',
-            ));
-            
-            acf_render_field_setting($field, array(
-                'label'         => __('Preview', 'acf'),
-                'instructions'  => '',
-                'name'          => 'preview',
-                'type'			=> 'true_false',
-                'ui'			=> 1,
             ));
             
             acf_render_field_setting($field, array(
@@ -515,12 +453,16 @@ if( ! class_exists('acf_field_components') ) :
             
             wp_enqueue_style(
                 'acf-input-component_field',
-                "{$dir}css/input.css"
+                "{$dir}css/input.css",
+                [],
+                '1.2.3'
             );
             
             wp_enqueue_script(
                 'acf-input-component_field',
-                "{$dir}js/input.js"
+                "{$dir}js/input.js",
+                [],
+                '1.2.3'
             );
         }
         

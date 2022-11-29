@@ -2,14 +2,6 @@
     position: relative; display: inline-block; width: 40px; margin-right: 15px; height: 15px; margin-bottom: -18px; margin-left: 2px;
 }
 
-.acf-components-preview .layout.-collapsed .acf-fc-layout-handle .thumbnail{
-    display: inline-block;
-}
-
-.acf-components-preview .layout .acf-fc-layout-handle .thumbnail{
-    display: none;
-}
-
 .acf-fc-layout-handle .thumbnail .small{
     position: absolute; left: 0; bottom: 0; width: 100%; border: 1px solid #ddd; padding: 2px; background: #fff;
 }

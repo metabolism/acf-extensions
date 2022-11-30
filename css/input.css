@@ -24,4 +24,6 @@
 /*.acf-flexible-content .layout .acf-fields{ display: none }*/
 #side-sortables .acf-fields>.acf-field{ width: 100%!important; }
 
-.acf-input .char-count{ position: absolute; right: 0; bottom: 100%; font-size: 11px; margin-bottom: 3px; opacity: 0.6 }
+.acf-input .char-count{ position: absolute; right: 0; bottom: 100%; font-size: 11px; margin-bottom: 3px }
+.acf-input .char-count span{ opacity: 0.6 }
+.acf-input .char-count .count--more{ color: darkred; font-weight: bold; opacity: 1 }

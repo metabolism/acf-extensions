@@ -48,13 +48,22 @@
         },
 
         change_count: function(e){
-            var $max = e.$el.attr('maxlength');
-            if (typeof($max) == 'undefined') {
+
+            var $input = e.$el.closest('.acf-input');
+            var max = $input.find('.char-count').data('max');
+
+            if (typeof(max) == 'undefined')
                 return;
-            }
-            var $value = e.$el.val();
-            var $length = $value.length;
-            e.$el.closest('.acf-input').find('.count').text($length);
+
+            var value = e.$el.val();
+            var $count = $input.find('.count')
+
+            $count.text(value.length);
+
+            if( value.length > max )
+                $count.addClass('count--more')
+            else
+                $count.removeClass('count--more')
         },
 
     });
@@ -67,13 +76,21 @@
         },
 
         change_count: function(e){
-            var $max = e.$el.attr('maxlength');
-            if (typeof($max) == 'undefined' || e.$el.closest('.acf-input').find('.count').length == 0) {
+            var $input = e.$el.closest('.acf-input');
+            var max = $input.find('.char-count').data('max');
+
+            if (typeof(max) == 'undefined')
                 return;
-            }
-            var $value = e.$el.val();
-            var $length = $value.length;
-            e.$el.closest('.acf-input').find('.count').text($length);
+
+            var value = e.$el.val();
+            var $count = $input.find('.count')
+
+            $count.text(value.length);
+
+            if( value.length > max )
+                $count.addClass('count--more')
+            else
+                $count.removeClass('count--more')
         },
 
     });

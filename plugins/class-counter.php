@@ -24,15 +24,12 @@ if( ! class_exists('acf_counter') ) :
 
         public function render_field($field) {
 
-            if (!$this->run() || !$field['maxlength'] || ($field['type'] != 'text' && $field['type'] != 'textarea'))
+            if (!$this->run() || (!$field['maxlength'] && !$field['maxlength_hint']??false) || ($field['type'] != 'text' && $field['type'] != 'textarea'))
                 return;
 
-            if (function_exists('mb_strlen'))
-                $len = mb_strlen($field['value']);
-            else
-                $len = strlen($field['value']);
+            $len = acf_strlen($field['value']);
 
-            $max = $field['maxlength'];
+            $max = $field['maxlength_hint']??$field['maxlength'];
 
             $classes 	= apply_filters('acf-input-counter/classes', array());
             $ids 		= apply_filters('acf-input-counter/ids', array());
@@ -70,10 +67,9 @@ if( ! class_exists('acf_counter') ) :
 
             $display = apply_filters('acf-input-counter/display', $display);
             $display = str_replace('%%len%%', '<span class="count">'.$len.'</span>', $display);
-            $display = str_replace('%%max%%', $max, $display);
-            $display = str_replace('%%remain%%', ( $max - $len ), $display);
+            $display = str_replace('%%max%%', '<span>'.$max.'</span>', $display);
             ?>
-            <span class="char-count"><?=$display?></span>
+            <span class="char-count" data-max="<?=$max?>"><?=$display?></span>
             <?php
         } // end public function render_field
 

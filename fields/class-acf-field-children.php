@@ -2,7 +2,7 @@
 
 if( ! class_exists('acf_field_children') ) :
 
-	class acf_field_latest_children extends acf_field {
+	class acf_field_children extends acf_field {
 
 
 		/*
@@ -56,6 +56,6 @@ if( ! class_exists('acf_field_children') ) :
 		}
 	}
 
-	acf_register_field_type( 'acf_field_latest_children' );
+	acf_register_field_type( 'acf_field_children' );
 
 endif; // class_exists check

@@ -6,6 +6,7 @@ if( ! class_exists('acf_counter') ) :
         public function __construct() {
             add_action('acf/render_field/type=text', 		array($this, 'render_field'), 20, 1);
             add_action('acf/render_field/type=textarea', 	array($this, 'render_field'), 20, 1);
+            add_action('acf/render_field/type=inline_editor', 	array($this, 'render_field'), 20, 1);
         } // end public function __construct
 
         private function run() {
@@ -24,7 +25,7 @@ if( ! class_exists('acf_counter') ) :
 
         public function render_field($field) {
 
-            if (!$this->run() || (!$field['maxlength']??false && !$field['maxlength_hint']??false) || ($field['type'] != 'text' && $field['type'] != 'textarea'))
+            if (!$this->run() || (!$field['maxlength']??false && !$field['maxlength_hint']??false) || ($field['type'] != 'text' && $field['type'] != 'textarea' && $field['type'] != 'inline_editor'))
                 return;
 
             $len = acf_strlen($field['value']);

@@ -42,11 +42,9 @@
 
     acf.fields.textarea_counter = acf.field.extend({
         type: 'textarea',
-
         events: {
             'input textarea': 'change_count',
         },
-
         change_count: function(e){
 
             var $input = e.$el.closest('.acf-input');
@@ -64,17 +62,14 @@
                 $count.addClass('count--more')
             else
                 $count.removeClass('count--more')
-        },
-
+        }
     });
 
     acf.fields.text_counter = acf.field.extend({
         type: 'text',
-
         events: {
             'input input': 'change_count',
         },
-
         change_count: function(e){
             var $input = e.$el.closest('.acf-input');
             var max = $input.find('.char-count').data('max');
@@ -91,11 +86,10 @@
                 $count.addClass('count--more')
             else
                 $count.removeClass('count--more')
-        },
-
+        }
     });
 
-    var Field = acf.Field.extend({
+    var dynamicSelect = acf.Field.extend({
         type: 'dynamic_select',
         select2: false,
         wait: 'load',
@@ -136,6 +130,62 @@
         }
     });
 
-    acf.registerFieldType(Field);
+    acf.registerFieldType(dynamicSelect);
+
+    var inlineEditor = acf.Field.extend({
+        type: 'inline_editor',
+        wait: 'load',
+        events: {
+            removeField: 'onRemove',
+            duplicateField: 'onDuplicate'
+        },
+        change_count: function($input){
+            var max = $input.find('.char-count').data('max');
+
+            if (typeof(max) == 'undefined')
+                return;
+
+            var value = $input.find('.acf-input-inline-editor').text();
+            var $count = $input.find('.count')
+
+            $count.text(value.length);
+
+            if( value.length > max )
+                $count.addClass('count--more')
+            else
+                $count.removeClass('count--more')
+        },
+        initialize: function () {
+
+            var $input = this.$input(); // inherit data
+            var $parent = $input.closest('.acf-field');
+            var self = this;
+
+            var inline = new inLine('.acf-input-inline-editor-'+$input.attr('id'),{
+                output: '#'+$input.attr('id'),
+                toolbar: $input.data('toolbar').split(','),
+                colors: $input.data('colors')?$input.data('colors').split(','):'',
+                onChange: function (api) {
+                    self.change_count($parent)
+                    $input.change()
+                }
+            });
+
+            $input.data('inline', inline)
+        },
+        onRemove: function () {
+
+            var $input = this.$input(); // inherit data
+            var inline = $input.data('inline')
+
+            if( inline )
+                inline.destroy();
+        },
+        onDuplicate: function (e, $el, $duplicate) {
+
+        }
+    });
+
+    acf.registerFieldType(inlineEditor);
 
 })(jQuery);

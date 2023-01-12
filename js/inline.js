@@ -117,6 +117,9 @@ function inLine() {
                 case"bold":
                     n = F(e.node, "strong") || F(e.node, "b");
                     break;
+                case"nonBreakingSpace":
+                    n = F(e.node, "strong") || F(e.node, "b");
+                    break;
                 default:
                     n = document.queryCommandState(o.command)
             }
@@ -430,6 +433,28 @@ function inLine() {
                 label: q.options.labels.superscript,
                 html: '<svg xmlns="http://www.w3.org/2000/svg" width="490.003" height="460.14" viewBox="0 0 367.502 345.105"><g fill-rule="evenodd"><path fill="currentColor" d="M244.886 123.25c5.92-5.92 5.92-15.515 0-21.435-5.917-5.917-15.515-5.917-21.432 0l-85.678 85.677L52.1 101.815c-5.92-5.917-15.515-5.917-21.436 0-5.917 5.92-5.917 15.515 0 21.435l85.678 85.678-85.678 85.677c-5.917 5.917-5.917 15.515 0 21.432 5.92 5.92 15.515 5.92 21.436 0l85.677-85.677 85.678 85.677c5.917 5.92 15.515 5.92 21.432 0 5.92-5.917 5.92-15.515 0-21.432l-85.678-85.677zM268.729 36.746c0-8.37 6.786-15.156 15.156-15.156h22.735c20.928 0 37.89 16.963 37.89 37.89 0 20.929-16.962 37.892-37.89 37.892a7.579 7.579 0 0 0-7.578 7.578v7.578h30.312c8.37 0 15.157 6.787 15.157 15.157 0 8.37-6.787 15.156-15.157 15.156h-45.469c-8.37 0-15.156-6.787-15.156-15.156V104.95c0-20.928 16.963-37.89 37.89-37.89a7.579 7.579 0 0 0 0-15.157h-22.734c-8.37 0-15.156-6.787-15.156-15.157z"/></g></svg>'
             },
+            nonBreakingSpace: {
+                id: "nonBreakingSpace",
+                command: "nonBreakingSpace",
+                label: q.options.labels.nonBreakingSpace,
+                html: '<svg xmlns="http://www.w3.org/2000/svg" id="svg58" width="700pt" height="700pt" version="1.1" viewBox="0 0 700 700"><path id="path56" d="M140 556c0-13 10-23 23-23h47c13 0 23-11 23-24V183c0-13-10-24-23-24h-47a23 23 0 1 1 0-46h47c39 0 70 31 70 70v326c0 39-31 70-70 70h-47c-13 0-23-10-23-23zm420 0c0-13-10-23-23-23h-47c-13 0-23-11-23-24V183c0-13 10-24 23-24h47a23 23 0 1 0 0-46h-47c-39 0-70 31-70 70v326c0 39 31 70 70 70h47c13 0 23-10 23-23zm-233-70a23 23 0 1 0 46 0V206a23 23 0 1 0-46 0z"/></svg>',
+                onclick: function () {
+                    var sel, range;
+                    if (window.getSelection) {
+                        sel = window.getSelection();
+                        if (sel.rangeCount) {
+                            range = sel.getRangeAt(0);
+                            range.deleteContents();
+                            range.insertNode(document.createTextNode('\u00A0'));
+                        }
+                    } else if (document.selection && document.selection.createRange) {
+                        range = document.selection.createRange();
+                        range.text = '\u00A0';
+                    }
+                    const event = new Event('input');
+                    H.trigger.dispatchEvent(event);
+                }
+            },
             subscript: {
                 id: "subscript",
                 command: "subscript",
@@ -659,7 +684,7 @@ function inLine() {
             theme: "light",
             output: !1,
             html: !1,
-            toolbar: ["bold", "italic", "underline", "superscript", "subscript", "strikeThrough", "align", "unorderedList", "orderedList", "color", "link"],
+            toolbar: ["bold", "italic", "underline", "superscript", "nonBreakingSpace", "subscript", "strikeThrough", "align", "unorderedList", "orderedList", "color", "link"],
             colors: ["#199AA8", "#ABD356", "#F9C909", "#F45945", "#222C3A", "#4A5360", "#727985", "#99A0AB", "#C1C6D0"],
             labels: {
                 back: "Back",
@@ -669,6 +694,7 @@ function inLine() {
                 underline: "Underline",
                 strikeThrough: "Strike",
                 superscript: "Superscript",
+                nonBreakingSpace: "Non breaking space",
                 subscript: "Subscript",
                 unorderedList: "Unordered list",
                 orderedList: "Ordered list",

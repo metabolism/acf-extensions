@@ -63,7 +63,7 @@ if( ! class_exists('acf_field_tag') ) :
 		 */
 		public function prepareField($field)
 		{
-			if( isset($field['tag']) ){
+			if( isset($field['tag']) && $field['tag'] === true ){
 
 				if( $field['tag'] ){
 

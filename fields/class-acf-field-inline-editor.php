@@ -37,7 +37,7 @@ if( ! class_exists('acf_field_inline_editor') ) :
                 "{$dir}js/inline.js",
                 array('acf-input'),
                 false,
-                acf_get_setting('version')
+                '1.3.0'
             );
         }
 
@@ -108,6 +108,7 @@ if( ! class_exists('acf_field_inline_editor') ) :
                     'strikeThrough'=>'strikeThrough',
                     'align'=>'align',
                     'unorderedList'=>'unorderedList',
+                    'nonBreakingSpace'=>'nonBreakingSpace',
                     'orderedList'=>'orderedList',
                     'color'=>'color',
                     'link'=>'link'

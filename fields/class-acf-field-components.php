@@ -481,7 +481,7 @@ if( ! class_exists('acf_field_components') ) :
                 "{$dir}js/group.js",
                 array('acf-pro-input'),
                 false,
-                acf_get_setting('version')
+                '1.3.0'
             );
             
             wp_enqueue_style(

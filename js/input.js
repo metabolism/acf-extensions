@@ -160,8 +160,12 @@
             var $input = this.$input(); // inherit data
             var $parent = $input.closest('.acf-field');
             var self = this;
+            var $target = $parent.find('.acf-input-inline-editor')
 
-            var inline = new inLine('.acf-input-inline-editor-'+$input.attr('id'),{
+            if( !$target.length )
+                return;
+
+            var inline = new inLine('#'+$target.attr('id'),{
                 output: '#'+$input.attr('id'),
                 toolbar: $input.data('toolbar').split(','),
                 colors: $input.data('colors')?$input.data('colors').split(','):'',

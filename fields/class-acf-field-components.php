@@ -455,14 +455,14 @@ if( ! class_exists('acf_field_components') ) :
                 'acf-input-component_field',
                 "{$dir}css/input.css",
                 [],
-                '1.3.0'
+                '1.3.1'
             );
             
             wp_enqueue_script(
                 'acf-input-component_field',
                 "{$dir}js/input.js",
                 [],
-                '1.3.0'
+                '1.3.1'
             );
         }
         

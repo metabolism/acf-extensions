@@ -36,8 +36,7 @@ if( ! class_exists('acf_field_inline_editor') ) :
                 'acf-inline-editor-component_field',
                 "{$dir}js/inline.js",
                 array('acf-input'),
-                false,
-                '1.3.1'
+                ACF_EXTENSIONS_VERSION
             );
         }
 

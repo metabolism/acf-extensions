@@ -455,14 +455,14 @@ if( ! class_exists('acf_field_components') ) :
                 'acf-input-component_field',
                 "{$dir}css/input.css",
                 [],
-                '1.3.1'
+                ACF_EXTENSIONS_VERSION
             );
             
             wp_enqueue_script(
                 'acf-input-component_field',
                 "{$dir}js/input.js",
                 [],
-                '1.3.1'
+                ACF_EXTENSIONS_VERSION
             );
         }
         
@@ -480,13 +480,14 @@ if( ! class_exists('acf_field_components') ) :
                 'acf-group-component_field',
                 "{$dir}js/group.js",
                 array('acf-pro-input'),
-                false,
-                '1.3.0'
+                ACF_EXTENSIONS_VERSION
             );
             
             wp_enqueue_style(
                 'acf-group-component_field',
-                "{$dir}css/group.css"
+                "{$dir}css/group.css",
+                [],
+                ACF_EXTENSIONS_VERSION
             );
         }
         

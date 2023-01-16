@@ -25,7 +25,7 @@ if( ! class_exists('acf_counter') ) :
 
         public function render_field($field) {
 
-            if (!$this->run() || (!$field['maxlength']??false && !$field['maxlength_hint']??false) || ($field['type'] != 'text' && $field['type'] != 'textarea' && $field['type'] != 'inline_editor'))
+            if (!$this->run() || (!($field['maxlength']??false) && !($field['maxlength_hint']??false)) || ($field['type'] != 'text' && $field['type'] != 'textarea' && $field['type'] != 'inline_editor'))
                 return;
 
             $len = acf_strlen($field['value']);

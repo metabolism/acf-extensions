@@ -1,13 +1,13 @@
 {
   "name":"metabolism/acf-extensions",
-  "version": "1.4.0",
+  "version": "1.3.0",
   "homepage": "https://www.akhela.fr",
   "type": "wordpress-plugin",
   "description": "ACF Extensions plugin with components, hidden field, dynamic select, inline micro editor, Instagram post, children and latest posts field",
   "license": "GPL-3.0-or-later",
   "extra": {
     "branch-alias": {
-      "dev-1.4.x": "1.4.x-dev",
+      "dev-1.3.x": "1.3.x-dev",
       "dev-1.2.x": "1.2.x-dev"
     }
   }

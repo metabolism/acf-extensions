@@ -81,6 +81,8 @@ if( ! class_exists('acf_field_components') ) :
             
             // handle slug
             add_action('edit_form_before_permalink', array($this, 'acf_extensions_add_slug'));
+            add_action('acf/render_field_group_settings', array($this, 'acf_extensions_add_slug'));
+
             add_action('wp_insert_post', array($this, 'acf_extensions_update_component'), 10, 3 );
 
             // called the base, no parent, cause we're hacking the repeater
@@ -760,14 +762,32 @@ if( ! class_exists('acf_field_components') ) :
          * @return void
          * @since  1.0.0
          */
-        public function acf_extensions_add_slug($post) {
+        public function acf_extensions_add_slug() {
+
+            global $post;
+
             if($post->post_type == 'acf-field-group' && $post->post_status == 'acf-component'){
+
+                if( defined('ACF_MAJOR_VERSION') && ACF_MAJOR_VERSION > 5 ){
+
+                    $html =
+                        '<div class="acf-field acf-field-text" data-name="slug" data-type="text" style="max-width: 600px;">'.
+                        '<div class="acf-label">'.
+                        '<label for="acf_field_group-description">'.__( 'Slug' ).'</label></div>'.
+                        '<div class="acf-input">'.
+                        '<div class="acf-input-wrap"><input type="text" id="slug" name="slug" value="'.$post->post_excerpt.'" autocomplete="off"></div></div>'.
+                        '</div>';
+                }
+                else{
+
                 $html =
                     '<div class="hide-if-no-js">'.
                     '<strong>'.__( 'Slug' ).'</strong> '.
                     '<span id="editable-post-name"><input type="text" name="slug" value="'.$post->post_excerpt.'" autocomplete="off"></span> </span>'.
                     '<span id="edit-slug-buttons"><button type="submit" class="save button button-small">OK</button></span>'.
                     '</div>';
+                }
+
                 echo $html;
             }
         }

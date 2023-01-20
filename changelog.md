@@ -1,6 +1,10 @@
 CHANGELOG
 ---------
 
+##1.3.2
+#### Bugfix
+- replaced use of UPLOAD constant
+
 ## 1.3.1
 #### Bugfix
 - slug on component for ACF >= 6

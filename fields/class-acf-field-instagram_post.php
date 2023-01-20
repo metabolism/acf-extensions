@@ -28,12 +28,13 @@ if( ! class_exists('acf_field_instagram_post') ) :
                     if( !count($matches) || count($matches[0]) != 2)
                         return false;
 
-                    $filepath = ABSPATH . UPLOADS.'/instagram/'.$matches[0][1].'.jpg';
+                    $wp_upload_dir = wp_upload_dir();
+
+                    $filepath = $wp_upload_dir['basedir'].'/instagram/'.$matches[0][1].'.jpg';
                     @file_put_contents($filepath, @file_get_contents('https://www.instagram.com/p/'.$matches[0][1].'/media?size='.($field['size']??'m')));
 
                     if( file_exists($filepath) ){
 
-                        $wp_upload_dir = wp_upload_dir();
                         $file_url = str_replace($wp_upload_dir['basedir'], $wp_upload_dir['baseurl'], $filepath);
 
                         $body['thumbnail_url'] = $file_url;
@@ -110,8 +111,10 @@ if( ! class_exists('acf_field_instagram_post') ) :
 		{
 			parent::__construct();
 
-			if( defined(UPLOADS) && !is_dir(ABSPATH . UPLOADS.'/instagram') )
-				mkdir(ABSPATH . UPLOADS.'/instagram', 0777, true);
+            $wp_upload_dir = wp_upload_dir();
+
+			if( !is_dir($wp_upload_dir['basedir'] .'/instagram') )
+				@mkdir($wp_upload_dir['basedir'].'/instagram', 0777, true);
 
 			add_filter('acf/update_value', [$this, 'updateValue'], 10, 3);
 		}

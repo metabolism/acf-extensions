@@ -758,7 +758,6 @@ if( ! class_exists('acf_field_components') ) :
         /**
          * Display slug form
          *
-         * @param $post
          * @return void
          * @since  1.0.0
          */

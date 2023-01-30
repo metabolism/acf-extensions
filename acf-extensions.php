@@ -2,7 +2,7 @@
 /*
     Plugin Name: Advanced Custom Fields Extensions
     Description: Advanced Custom Fields add on. Create components, component field, hidden field and latest post field
-    Version: 1.3.2
+    Version: 1.3.3
     Author: Metabolism
     Author URI: https://github.com/wearemetabolism
     License: GPLv2 or later
@@ -11,7 +11,7 @@
 
 defined('ABSPATH') or die('No script kiddies please!');
 
-define('ACF_EXTENSIONS_VERSION', '1.3.2');
+define('ACF_EXTENSIONS_VERSION', '1.3.3');
 
 /**
  * Load up the translation files

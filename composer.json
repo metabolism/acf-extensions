@@ -1,6 +1,6 @@
 {
   "name":"metabolism/acf-extensions",
-  "version": "1.3.3",
+  "version": "1.3.4",
   "homepage": "https://github.com/wearemetabolism/wp-steroids",
   "type": "wordpress-plugin",
   "description": "ACF Extensions plugin with components, hidden field, dynamic select, inline micro editor, Instagram post, children and latest posts field",

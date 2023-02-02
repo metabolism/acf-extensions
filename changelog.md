@@ -1,11 +1,15 @@
 CHANGELOG
 ---------
 
-##1.3.3
+## 1.3.4
+#### Bugfix
+- Dynamic select
+
+## 1.3.3
 #### Bugfix
 - Clean html from inline editor
 
-##1.3.2
+## 1.3.2
 #### Bugfix
 - replaced use of UPLOAD constant
 

@@ -1,6 +1,10 @@
 CHANGELOG
 ---------
 
+## 1.3.5
+#### Bugfix
+- Warning with inline editor
+
 ## 1.3.4
 #### Bugfix
 - Dynamic select

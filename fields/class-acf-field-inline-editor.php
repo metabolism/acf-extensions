@@ -109,9 +109,8 @@ if( ! class_exists('acf_field_inline_editor') ) :
             $input_attrs['type'] = 'hidden';
             $input_attrs['class'] .= 'acf-input-hidden-'.$field['key'];
             $input_attrs['data-toolbar'] = implode(',', $field['toolbar']);
-            $input_attrs['data-colors'] = $field['colors'];
 
-            $html .= '<div class="acf-input-wrap"><div class="acf-input-inline-editor" id="'.$field['id'].'-inline-editor" style="min-height:'.(($field['rows']??1)*30).'px">'.$field['value'].'</div>' . acf_get_text_input( acf_filter_attrs( $input_attrs ) ) . '</div>';
+            $html .= '<div class="acf-input-wrap"><div class="acf-input-inline-editor" id="'.$field['id'].'-inline-editor" style="min-height:'.((intval($field['rows']??1))*30).'px">'.$field['value'].'</div>' . acf_get_text_input( acf_filter_attrs( $input_attrs ) ) . '</div>';
 
             // Display.
             echo $html;

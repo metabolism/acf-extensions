@@ -520,7 +520,7 @@ if( ! class_exists('acf_field_components') ) :
         {
             register_post_status('acf-component', array(
                 'label'                     => __('Component', 'acf-components'),
-                'public'                    => ! is_admin(),
+                'public'                    => false,
                 'exclude_from_search'       => true,
                 'show_in_admin_all_list'    => false,
                 'show_in_admin_status_list' => true,

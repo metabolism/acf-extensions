@@ -29,8 +29,8 @@
 .acf-input .char-count .count--more{ color: darkred; font-weight: bold; opacity: 1 }
 
 .acf-input-inline-editor{
-    border: 1px solid #8c8f94; background-color: #fff; color: #2c3338; min-height: 30px; padding: 0 8px;
-    line-height: 2; box-shadow: 0 0 0 transparent; border-radius: 4px;
+    border: 1px solid #8c8f94; background-color: #fff; color: #2c3338; min-height: 30px; padding: 5px 8px;
+    line-height: 1.4em; box-shadow: 0 0 0 transparent; border-radius: 4px; font-size: 13px;
 }
 
 .acf-input-inline-editor sub{ vertical-align: revert }

@@ -30,6 +30,10 @@ if( ! class_exists('acf_field_inline_editor') ) :
 
         function strip_word_html($text, $allowed_tags = '<a><ul><li><b><i><sup><sub><em><strong><u><br><br/><br /><p><h2><h3><h4><h5><h6>')
         {
+            $text = str_replace('<b>', '<strong>', $text);
+            $text = str_replace('</b>', '</strong>', $text);
+            $text = preg_replace('#(.)<div>#', '$1<br/>', $text);
+
             if( !extension_loaded('mbstring') )
                 return strip_tags($text, $allowed_tags);
 
@@ -47,7 +51,7 @@ if( ! class_exists('acf_field_inline_editor') ) :
 
             $text = preg_replace(array('/^\s\s+/', '/\s\s+$/', '/\s\s+/u'), array('', '', ' '), $text);
 
-            $search = array('#<(strong|b)[^>]*>(.*?)</(strong|b)>#isu', '#<(em|i)[^>]*>(.*?)</(em|i)>#isu', '#<u[^>]*>(.*?)</u>#isu');
+            $search = array('#<(strong)[^>]*>(.*?)</(strong)>#isu', '#<(em|i)[^>]*>(.*?)</(em|i)>#isu', '#<u[^>]*>(.*?)</u>#isu');
             $replace = array('<b>$2</b>', '<i>$2</i>', '<u>$1</u>');
             $text = preg_replace($search, $replace, $text);
 
@@ -56,7 +60,11 @@ if( ! class_exists('acf_field_inline_editor') ) :
             if($num_matches)
                 $text = preg_replace('/\<!--(.)*--\>/isu', '', $text);
 
-            return preg_replace('/(<[^>]+) style=".*?"/i', '$1', $text);
+            $text = preg_replace('/(<[^>]+) style=".*?"/i', '$1', $text);
+            $text = str_replace('<strong>', '<b>', $text);
+            $text = str_replace('</strong>', '</b>', $text);
+
+            return $text;
         }
 
         /**

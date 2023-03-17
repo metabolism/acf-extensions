@@ -1,6 +1,10 @@
 CHANGELOG
 ---------
 
+## 1.3.6
+#### Bugfix
+- Line break with inline editor and link style
+
 ## 1.3.5
 #### Bugfix
 - Warning with inline editor

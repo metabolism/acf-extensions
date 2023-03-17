@@ -33,5 +33,6 @@
     line-height: 1.4em; box-shadow: 0 0 0 transparent; border-radius: 4px; font-size: 13px;
 }
 
+.acf-input-inline-editor a{ text-decoration: underline; color: var(--wp-admin-theme-color); }
 .acf-input-inline-editor sub{ vertical-align: revert }
 .acf-input-inline-editor sup{ vertical-align: revert }

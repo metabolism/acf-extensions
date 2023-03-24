@@ -1,6 +1,10 @@
 CHANGELOG
 ---------
 
+## 1.3.7
+#### Bugfix
+- input with tag selector
+
 ## 1.3.6
 #### Bugfix
 - Line break with inline editor and link style

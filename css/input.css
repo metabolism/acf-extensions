@@ -1,7 +1,8 @@
 .acf-field-hidden, .acf-field-latest-posts, .acf-field-id, .acf-field-children{ display: none; }
 .acf-field .acf-label:empty{ display: none }
-.acf-tag-selector{ position: absolute; right: 0; bottom: 100%; width: auto; margin-bottom: 6px }
-.acf-tag-selector select{ width: auto!important; padding: 0 8px!important; padding-right: 30px!important; min-height: 22px; font-size: 11px!important; }
+
+.acf-tag-selector{ position: absolute; right: 0; bottom: 100%; margin-bottom: 6px; width: auto }
+.acf-tag-selector select{ width: auto!important; padding: 0 8px!important; padding-right: 30px!important; min-height: 20px; font-size: 11px!important; }
 
 .acf-instagram_post img{ width: 150px; height: 150px; object-fit: cover; margin-top: 5px }
 

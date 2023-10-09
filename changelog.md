@@ -1,6 +1,10 @@
 CHANGELOG
 ---------
 
+## 1.3.8
+#### Bugfix
+- Link error
+
 ## 1.3.7
 #### Bugfix
 - input with tag selector

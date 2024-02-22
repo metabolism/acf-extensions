@@ -1,6 +1,9 @@
 CHANGELOG
 ---------
 
+## 1.3.9
+- License changed to MIT
+
 ## 1.3.8
 #### Bugfix
 - Link error

@@ -2,15 +2,14 @@
 /*
     Plugin Name: Advanced Custom Fields Extensions
     Description: Advanced Custom Fields add on. Create components, component field, hidden field and latest post field
-    Version: 1.3.8
+    Version: 1.3.9
     Author: Metabolism
-    License: GPLv2 or later
-    License URI: http://www.gnu.org/licenses/gpl-2.0.html
+    License: MIT
 */
 
 defined('ABSPATH') or die('No script kiddies please!');
 
-define('ACF_EXTENSIONS_VERSION', '1.3.8');
+define('ACF_EXTENSIONS_VERSION', '1.3.9');
 
 /**
  * Load up the translation files

@@ -51,15 +51,18 @@
         /**
          * Modify link attributes to include aria label
          */
-        wpLink.getAttrs = function() {
+        if( typeof wpLink !== 'undefined' ){
 
-            wpLink.correctURL();
+            wpLink.getAttrs = function() {
 
-            return {
-                'aria-label' : $.trim( $( '#wp-link-aria_label' ).val() ),
-                'href'       : $.trim( $( '#wp-link-url' ).val() ),
-                'target'     : $( '#wp-link-target' ).prop( 'checked' ) ? '_blank' : ''
-            };
+                wpLink.correctURL();
+
+                return {
+                    'aria-label' : $.trim( $( '#wp-link-aria_label' ).val() ),
+                    'href'       : $.trim( $( '#wp-link-url' ).val() ),
+                    'target'     : $( '#wp-link-target' ).prop( 'checked' ) ? '_blank' : ''
+                };
+            }
         }
     })
 

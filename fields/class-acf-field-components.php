@@ -352,7 +352,7 @@ if( ! class_exists('acf_field_components') ) :
                 $field = $this->prepare_field_group_for_export($field);
             }
             
-            if($type == 'fields' && $thumbnail_id = $field_group['thumbnail_id']){
+            if($type == 'fields' && $thumbnail_id = $field_group['thumbnail_id']??false){
                 
                 $wp_upload_dir = wp_upload_dir();
                 

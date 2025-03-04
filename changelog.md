@@ -1,6 +1,9 @@
 CHANGELOG
 ---------
 
+## 1.3.14
+- Fixed a bug when inline editor was empty, a <br> remains
+
 ## 1.3.13
 - Fixed a warning in 'acf rule tax type'
 

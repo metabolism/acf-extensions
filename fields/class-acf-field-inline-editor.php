@@ -75,7 +75,12 @@ if( ! class_exists('acf_field_inline_editor') ) :
          */
         function update_value($value, $post_id=0, $field=array()){
 
-            return $this->strip_word_html($value, '<b><i><strong><sup><sub><a><u><strike><br>');
+            $value = $this->strip_word_html($value, '<b><i><strong><sup><sub><a><u><strike><br>');
+
+            if( trim($value) == '<br>')
+                $value = '';
+
+            return $value;
         }
 
         public function input_admin_enqueue_scripts()

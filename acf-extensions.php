@@ -2,14 +2,14 @@
 /*
     Plugin Name: Advanced Custom Fields Extensions
     Description: Advanced Custom Fields add on. Create components, component field, hidden field and latest post field
-    Version: 1.3.14
+    Version: 1.3.15
     Author: Metabolism
     License: MIT
 */
 
 defined('ABSPATH') or die('No script kiddies please!');
 
-define('ACF_EXTENSIONS_VERSION', '1.3.14');
+define('ACF_EXTENSIONS_VERSION', '1.3.15');
 
 /**
  * Load up the translation files
@@ -52,6 +52,7 @@ function include_acf_extensions_plugin() {
 	include_once('fields/class-acf-field-latest_posts.php');
 	include_once('fields/class-acf-field-link.php');
 	include_once('fields/class-acf-field-map.php');
+	include_once('fields/class-acf-field-menu.php');
 	include_once('fields/class-acf-field-dynamic_select.php');
 	include_once('fields/class-acf-field-id.php');
 	include_once('fields/class-acf-field-instagram_post.php');
@@ -59,11 +60,12 @@ function include_acf_extensions_plugin() {
 
 	include_once('rules/class-acf-rule-multisite.php');
 	include_once('rules/class-acf-rule-parent-post.php');
-	include_once('rules/class-acf-location-term-type.php');
-	include_once('rules/class-acf-rule-tax-type.php');
-	include_once('rules/class-acf-rule-nav-menu-item-depth.php');
+    include_once('rules/class-acf-rule-tax-type.php');
+    include_once('rules/class-acf-rule-nav-menu-item-depth.php');
 
-	include_once('settings/class-acf-field-tag.php');
+    include_once('locations/class-acf-location-term-type.php');
+
+    include_once('settings/class-acf-field-tag.php');
 
 	include_once('plugins/class-export.php');
 	include_once('plugins/class-counter.php');

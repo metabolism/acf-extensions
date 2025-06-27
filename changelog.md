@@ -1,6 +1,10 @@
 CHANGELOG
 ---------
 
+## 1.3.15
+- Added Menu field type
+- Set hidden/id/instagram/latest posts fields type as deprecated
+
 ## 1.3.14
 - Fixed a bug when inline editor was empty, a <br> remains
 

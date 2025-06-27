@@ -89,6 +89,7 @@ if( ! class_exists('acf_field_instagram_post') ) :
             // vars
             $this->name = 'instagram_post';
             $this->label = __("Instagram post",'acf');
+            $this->category = 'Deprecated';
             $this->defaults = array(
                 'default_value'	=> '',
                 'size'	=> 'm',

@@ -23,7 +23,7 @@ if( ! class_exists('acf_field_children') ) :
 			// vars
 			$this->name = 'children';
 			$this->label = __("Page children",'acf');
-            $this->category = 'relational';
+            $this->category = 'Deprecated';
         }
 
 

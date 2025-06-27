@@ -8,7 +8,6 @@ Supercharge WordPress Advanced Custom Fields
 
 ### New features
 * **Component**: treat a field group as a component and reuse it in any other field groups.
-* **Enhanced Editor**: add table management to Tiny MCE Editor
 * **Enhanced link field**: post id is saved to allow url update on load if changed
 * **Enhanced map field**: add country, iso and country_short in value
 * **Text field counter**: value set in maxlength is shown next to the field ( ex: 100/250 )
@@ -26,11 +25,7 @@ Supercharge WordPress Advanced Custom Fields
 * **Components**: Enhanced layout, select components in a list
 * **Component**: Enhanced clone, select component in a list
 * **Dynamic select**: Generate a select using value from anoter field
-* **Hidden**: Return a static value
-* **ID**: Return an uid
 * **Inline editor**: Enhanced text field with [inLine](https://felixg.io/docs/products/inline) lib
-* **Instagram post**: past post url, return title and image
-* **Latest posts**
 
 ## Screenshots
 

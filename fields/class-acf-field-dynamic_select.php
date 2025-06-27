@@ -180,30 +180,11 @@ if( ! class_exists('acf_field_dynamic_select_extension') ) :
 
         function render_field_settings( $field ) {
 
-            // allow_null
-            acf_render_field_setting( $field, array(
-                'label'			=> __('Allow Null?','acf'),
-                'instructions'	=> '',
-                'name'			=> 'allow_null',
-                'type'			=> 'true_false',
-                'ui'			=> 1,
-            ));
-
             // multiple
             acf_render_field_setting( $field, array(
                 'label'			=> __('Select multiple values?','acf'),
                 'instructions'	=> '',
                 'name'			=> 'multiple',
-                'type'			=> 'true_false',
-                'ui'			=> 1,
-            ));
-
-
-            // ui
-            acf_render_field_setting( $field, array(
-                'label'			=> __('Stylised UI','acf'),
-                'instructions'	=> '',
-                'name'			=> 'ui',
                 'type'			=> 'true_false',
                 'ui'			=> 1,
             ));

@@ -37,3 +37,28 @@
 .acf-input-inline-editor a{ text-decoration: underline; color: var(--wp-admin-theme-color); }
 .acf-input-inline-editor sub{ vertical-align: revert }
 .acf-input-inline-editor sup{ vertical-align: revert }
+
+.field-type-icon.field-type-icon-dynamic-select:before {
+    -webkit-mask-image: url(../../advanced-custom-fields-pro/assets/images/field-type-icons/icon-field-select.svg);
+    mask-image: url(../../advanced-custom-fields-pro/assets/images/field-type-icons/icon-field-select.svg);
+}
+
+.field-type-icon.field-type-icon-menu:before {
+    -webkit-mask-image: url(../../advanced-custom-fields-pro/assets/images/field-type-icons/icon-field-taxonomy.svg);
+    mask-image: url(../../advanced-custom-fields-pro/assets/images/field-type-icons/icon-field-taxonomy.svg);
+}
+
+.field-type-icon.field-type-icon-inline-editor:before {
+    -webkit-mask-image: url(../../advanced-custom-fields-pro/assets/images/field-type-icons/icon-field-wysiwyg.svg);
+    mask-image: url(../../advanced-custom-fields-pro/assets/images/field-type-icons/icon-field-wysiwyg.svg);
+}
+
+.field-type-icon.field-type-icon-component:before {
+    -webkit-mask-image: url(../../advanced-custom-fields-pro/assets/images/field-type-icons/icon-field-clone.svg);
+    mask-image: url(../../advanced-custom-fields-pro/assets/images/field-type-icons/icon-field-clone.svg);
+}
+
+.field-type-icon.field-type-icon-components:before {
+    -webkit-mask-image: url(../../advanced-custom-fields-pro/assets/images/field-type-icons/icon-field-flexible-content.svg);
+    mask-image: url(../../advanced-custom-fields-pro/assets/images/field-type-icons/icon-field-flexible-content.svg);
+}

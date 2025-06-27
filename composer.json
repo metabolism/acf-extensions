@@ -1,8 +1,8 @@
 {
   "name":"metabolism/acf-extensions",
-  "version": "1.3.14",
+  "version": "1.3.15",
   "type": "wordpress-plugin",
-  "description": "ACF Extensions plugin with components, hidden field, dynamic select, inline micro editor, Instagram post, children and latest posts field",
+  "description": "ACF Extensions plugin with components, dynamic select, inline micro editor and much more",
   "license": "MIT",
   "extra": {
     "branch-alias": {

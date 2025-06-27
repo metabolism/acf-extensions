@@ -23,8 +23,8 @@ if( ! class_exists('acf_field_latest_posts') ) :
 			// vars
 			$this->name = 'latest_posts';
 			$this->label = __("Latest posts",'acf');
-			$this->category = 'relational';
-			$this->defaults = array(
+            $this->category = 'Deprecated';
+            $this->defaults = array(
 				'post_type'	=> '',
 				'posts_per_page' => 6
 			);

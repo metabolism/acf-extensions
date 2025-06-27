@@ -23,6 +23,7 @@ if( ! class_exists('acf_field_inline_editor') ) :
             // vars
             $this->name = 'inline_editor';
             $this->label = __("Inline editor",'acf');
+            $this->category = 'Content';
             $this->defaults = array(
                 'default_value'	=> ''
             );

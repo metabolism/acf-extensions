@@ -23,6 +23,7 @@ if( ! class_exists('acf_field_hidden') ) :
 			// vars
 			$this->name = 'hidden';
 			$this->label = __("Hidden",'acf');
+            $this->category = 'Deprecated';
 			$this->defaults = array(
 				'default_value'	=> ''
 			);

@@ -23,6 +23,7 @@ if( ! class_exists('acf_field_id') ) :
 			// vars
 			$this->name = 'id';
 			$this->label = __("Uniqid",'acf');
+            $this->category = 'Deprecated';
 			$this->defaults = array(
                 'default_value'	=> ''
 			);

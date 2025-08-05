@@ -62,6 +62,7 @@ function include_acf_extensions_plugin() {
 	include_once('rules/class-acf-rule-parent-post.php');
     include_once('rules/class-acf-rule-tax-type.php');
     include_once('rules/class-acf-rule-nav-menu-item-depth.php');
+    include_once('rules/class-acf-rule-nav-menu-field-value.php');
 
     include_once('locations/class-acf-location-term-type.php');
 

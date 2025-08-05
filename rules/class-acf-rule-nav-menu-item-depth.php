@@ -15,7 +15,7 @@ if ( ! class_exists( 'ACF_Location_Nav_Menu_Item_Depth' ) ) :
 		 */
 		public function initialize() {
 			$this->name        = 'nav_menu_item_depth';
-			$this->label       = __( 'Menu item depth', 'acf' );
+			$this->label       = __( 'Menu Item Depth', 'acf' );
 			$this->category    = 'forms';
 			$this->object_type = 'menu_item_depth';
 		}

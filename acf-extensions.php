@@ -57,6 +57,7 @@ function include_acf_extensions_plugin() {
 	include_once('fields/class-acf-field-id.php');
 	include_once('fields/class-acf-field-instagram_post.php');
 	include_once('fields/class-acf-field-inline-editor.php');
+	include_once('fields/class-acf-field-post_type.php');
 
 	include_once('rules/class-acf-rule-multisite.php');
 	include_once('rules/class-acf-rule-parent-post.php');

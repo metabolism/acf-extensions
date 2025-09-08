@@ -143,7 +143,6 @@ if( ! class_exists('acf_field_components') ) :
                     )
                 );
                 
-                echo '<div class="acf-components-actions"><a class="acf-components-collapse dashicons dashicons-arrow-up-alt2 acf-js-tooltip" title="Collapse all"></a><a class="acf-components-expand dashicons dashicons-arrow-down-alt2 acf-js-tooltip" title="Expand all"></a></div>';
                 echo '<script type="text-html" class="tmpl-popup tmpl-popup-components"><ul>';
                 
                 foreach( $field['layouts'] as $layout ){
@@ -629,7 +628,7 @@ if( ! class_exists('acf_field_components') ) :
                 }
             }
             
-            return '<span class="acf-component-title">'.$title.'</span><span class="acf-component-preview-title">'.(!empty($preview)?' : '.substr($preview,0,100):'').'</span>';
+            return '<span class="acf-component-title">'.$title.'</span><span class="acf-component-preview-title">'.(!empty($preview)?' : '.substr(stripslashes($preview),0,100):'').'</span>';
         }
         
         /**

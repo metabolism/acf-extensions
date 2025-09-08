@@ -11,43 +11,6 @@
     // add collapse / expand all on flexible field
     $(document).ready(function (){
 
-        $('.acf-components-collapse').click(function (){
-
-            $(this).closest('.acf-field-flexible-content').find('.layout').addClass('-collapsed')
-        });
-
-        $('.acf-components-expand').click(function (){
-
-            $(this).closest('.acf-field-flexible-content').find('.layout').removeClass('-collapsed')
-        });
-
-        $('.acf-field-flexible-content').each(function (){
-
-            var $collapse = $(this).find('input[name="collapse['+$(this).data('key')+']"]')
-
-            if( $collapse.val() === '1'){
-
-                $(this).find('.layout:not(.-collapsed)').slice(1).addClass('-collapsed')
-
-                $(this).on('click', '[data-name="collapse-layout"]', function( e ){
-
-                    var $this = $(e.target);
-                    var $layout = $this.closest('.layout');
-
-                    if( !$layout.hasClass('-collapsed') ){
-
-                        $this.closest('.acf-flexible-content').find('.layout').not($layout).addClass('-collapsed');
-
-                        setTimeout(function (){
-                            var pos = $layout.offset().top;
-                            if( pos-$(window).scrollTop() < 0 )
-                                window.scrollTo(0,pos-70)
-                        })
-                    }
-                });
-            }
-        });
-
         /**
          * Modify link attributes to include aria label
          */

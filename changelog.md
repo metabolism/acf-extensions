@@ -2,6 +2,7 @@ CHANGELOG
 ---------
 
 ## 1.3.15
+- Remove Expand/Collapse on components, now native
 - Added Menu field type
 - Set hidden/id/instagram/latest posts fields type as deprecated
 

@@ -4,28 +4,28 @@
 [![Latest Unstable Version](http://poser.pugx.org/metabolism/acf-extensions/v/unstable)](https://packagist.org/packages/metabolism/acf-extensions)
 [![License](http://poser.pugx.org/metabolism/acf-extensions/license)](https://packagist.org/packages/metabolism/acf-extensions)
 
-Supercharge WordPress Advanced Custom Fields 
+## 🚀 New Features
+- **Components system**: treat a field group as a reusable component, and include it in other groups.
+- **Enhanced link field**: also saves the post ID, ensuring the URL updates automatically if changed.
+- **Enhanced map field**: adds `country`, `iso`, and `country_short` to the field value.
+- **Text field counter**: displays the current/maximum characters (e.g. `100/250`).
+- **Tag selector**: select tags for a field (e.g. `h1`, `h2`, `h3`).
 
-### New features
-* **Component**: treat a field group as a component and reuse it in any other field groups.
-* **Enhanced link field**: post id is saved to allow url update on load if changed
-* **Enhanced map field**: add country, iso and country_short in value
-* **Text field counter**: value set in maxlength is shown next to the field ( ex: 100/250 )
-* **Tag selector**: Allow tag selection on a field (h1,h2,h3...)
+## 🧩 New Rules
+- **Term type**: `Top-level term` (no parent), `Parent term` (has children), `Child term` (has parent).
+- **Site**: in multisite setups, show fields on a specific site only.
+- **Menu item depth**: condition based on menu hierarchy level.
+- **Menu field**: condition based on menu selection.
+- **Post parent**: show fields only if the current post parent matches the rule.
+- **Term template**: condition based on the taxonomy template.
 
-### New rules
-* **Term type**: Top Level Term (no parent), Parent Term (has children), Child Term (has parent)
-* **Site**: When using multisite, show field on a specific site only
-* **Menu item depth**
-* **Post Parent**: Show fields if the current post parent match the rule
-* **Term template**
-
-### New fields
-* **Children**: return current post children
-* **Components**: Enhanced layout, select components in a list
-* **Component**: Enhanced clone, select component in a list
-* **Dynamic select**: Generate a select using value from anoter field
-* **Inline editor**: Enhanced text field with [inLine](https://felixg.io/docs/products/inline) lib
+## 🆕 New Fields
+- **Components**: enhanced layout, select multiple components from a list.
+- **Component**: improved clone field, pick a component from a list.
+- **Post type**: dropdown listing all registered post types.
+- **Menu**: dropdown listing all menus.
+- **Dynamic select**: generate a dropdown whose values depend on another field.
+- **Inline editor**: text field with inline editing powered by [inLine](https://felixg.io/docs/products/inline).
 
 ## Screenshots
 

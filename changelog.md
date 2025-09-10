@@ -1,116 +1,121 @@
-CHANGELOG
----------
+# Changelog
 
 ## 1.3.15
-- Remove Expand/Collapse on components, now native
-- Added Menu field type
-- Set hidden/id/instagram/latest posts fields type as deprecated
+### Changes
+- Removed expand/collapse on components (now native in ACF).
+- Added **Menu** field type.
+- Deprecated the following field types: `hidden`, `id`, `instagram`, `latest posts`.
 
 ## 1.3.14
-- Fixed a bug when inline editor was empty, a <br> remains
+### Bugfixes
+- Fixed an issue where an empty inline editor left a `<br>` tag.
 
 ## 1.3.13
-- Fixed a warning in 'acf rule tax type'
+### Bugfixes
+- Fixed a warning in **ACF rule tax type**.
 
 ## 1.3.12
-- Improved component UI
-- Removed table Tinymce plugin, moved to WP Steroids plugin
+### Changes
+- Improved component UI.
+- Removed **Table TinyMCE plugin** (moved to WP Steroids plugin).
 
 ## 1.3.11
-- Use curl with agent to download Instagram image
+### Changes
+- Use cURL with user agent to download Instagram images.
 
 ## 1.3.10
-- Added aria label input on link selector
+### Features
+- Added `aria-label` input on link selector.
 
 ## 1.3.9
-- License changed to MIT
+### Changes
+- License changed to **MIT**.
 
 ## 1.3.8
-#### Bugfix
-- Link error
+### Bugfixes
+- Fixed link error.
 
 ## 1.3.7
-#### Bugfix
-- input with tag selector
+### Bugfixes
+- Fixed input issue with tag selector.
 
 ## 1.3.6
-#### Bugfix
-- Line break with inline editor and link style
+### Bugfixes
+- Fixed line break issue with inline editor and link style.
 
 ## 1.3.5
-#### Bugfix
-- Warning with inline editor
+### Bugfixes
+- Fixed warning with inline editor.
 
 ## 1.3.4
-#### Bugfix
-- Dynamic select
+### Bugfixes
+- Fixed dynamic select issue.
 
 ## 1.3.3
-#### Bugfix
-- Clean html from inline editor
+### Bugfixes
+- Cleaned HTML output from inline editor.
 
 ## 1.3.2
-#### Bugfix
-- replaced use of UPLOAD constant
+### Bugfixes
+- Replaced usage of `UPLOAD` constant.
 
 ## 1.3.1
-#### Bugfix
-- slug on component for ACF >= 6
+### Bugfixes
+- Fixed component slug compatibility for ACF >= 6.
 
 ## 1.3.0
-#### Feature
-- New fields
+### Features
+- Added new fields.
 
 ## 1.2.2
-#### Bugfix
-- id field, generated uniqid
+### Bugfixes
+- Fixed issue with ID field generating `uniqid`.
 
 ## 1.1.11
-#### Feature
-- added post parent location rule
+### Features
+- Added **Post parent** location rule.
 
 ## 1.1.10
-#### Feature
-- added instagram post url
+### Features
+- Added Instagram post URL field.
 
 ## 1.1.9
-#### Feature
-- added id field, generate uniqid
+### Features
+- Added **ID field** (generates a unique ID).
 
 ## 1.1.8
-#### Feature
-- added fields cleaning function, add ?clean-acf=1 in a backend url
+### Features
+- Added fields cleaning function (`?clean-acf=1` in backend URL).
 
 ## 1.1.7
-#### Bugfix
-- invalid `dynamic_select` component value
+### Bugfixes
+- Fixed invalid `dynamic_select` component value.
 
 ## 1.1.6
-#### Feature
-- added `dynamic_select` component, list values from other field in post or in options
+### Features
+- Added `dynamic_select` component (lists values from another field in post or options).
 
 ## 1.1.5
-#### Feature
-- Latest post component allow multiple post_type
+### Features
+- **Latest posts** component now supports multiple `post_type`.
 
 ## 1.1.4
-#### Bugfix
-- Allow empty tag
+### Bugfixes
+- Allowed empty tags.
 
 ## 1.1.3
-#### Feature
-- added `tag` settings to text/textarea to let user choose html tag
-- added `public` settings to control entity variable visibility
-- added `sizes` in image and gallery
-- leave only fallback for map as it is now included in acf
-
-#### Bugfix
-- Fix post selection when using term template
+### Features
+- Added `tag` setting to text/textarea fields (choose HTML tag).
+- Added `public` setting to control entity variable visibility.
+- Added `sizes` support in image and gallery fields.
+- Removed map fallback (now included in ACF).
+### Bugfixes
+- Fixed post selection when using term template.
 
 ## 1.1.2
-#### Feature
-- added `term template` display rule selector, require a `get_taxonomy_templates` function
+### Features
+- Added `term template` display rule selector (requires `get_taxonomy_templates` function).
 
 ## 1.1.1
-#### Bugfix
-- fix when Multisite rules equal all
+### Bugfixes
+- Fixed issue when multisite rules equal `all`.

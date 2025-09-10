@@ -1,7 +1,7 @@
 <?php
 /*
     Plugin Name: Advanced Custom Fields Extensions
-    Description: Advanced Custom Fields add on. Create components, component field, hidden field and latest post field
+    Description: Extend ACF with components, new field types, and smarter rules to speed up custom WordPress development.
     Version: 1.3.15
     Author: Metabolism
     License: MIT

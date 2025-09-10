@@ -4,6 +4,8 @@
 [![Latest Unstable Version](http://poser.pugx.org/metabolism/acf-extensions/v/unstable)](https://packagist.org/packages/metabolism/acf-extensions)
 [![License](http://poser.pugx.org/metabolism/acf-extensions/license)](https://packagist.org/packages/metabolism/acf-extensions)
 
+Supercharge Advanced Custom Fields with reusable components, enhanced field types (link, map, inline editor, dynamic select…), and powerful display rules to build smarter WordPress backends.
+
 ## 🚀 New Features
 - **Components system**: treat a field group as a reusable component, and include it in other groups.
 - **Enhanced link field**: also saves the post ID, ensuring the URL updates automatically if changed.

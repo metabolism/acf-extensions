@@ -351,44 +351,14 @@ if( ! class_exists('acf_field_components') ) :
                 $field = $this->prepare_field_group_for_export($field);
             }
             
-            if($type == 'fields' && $thumbnail_id = $field_group['thumbnail_id']??false){
-                
-                $wp_upload_dir = wp_upload_dir();
-                
-                $acf_thumb_dir = '/acf-thumbnails';
-                
-                $image_src = get_attached_file($thumbnail_id);
-                
-                if( $image_src && strlen($image_src) ){
-                    
-                    $src_filename = str_replace($wp_upload_dir['basedir'],'', str_replace('-150x150', '', $image_src));
-                    $ext = '.'.pathinfo($src_filename, PATHINFO_EXTENSION);
-                    
-                    $dest_filename = $field_group['key'].$ext;
-                    $dest_filepath = $wp_upload_dir['basedir'].$acf_thumb_dir.'/'.$dest_filename;
-                    $dest_folder = dirname($dest_filepath);
-                    if( !is_dir( $dest_folder ) )
-                        mkdir($dest_folder, 0777, true);
-                    
-                    if( file_exists($wp_upload_dir['basedir'].'/'.$src_filename) ){
-                        
-                        $src_filepath = $wp_upload_dir['basedir'].'/'.$src_filename;
-                        $thumb_src_filepath = $wp_upload_dir['basedir'].'/'.str_replace($ext, '-150x150'.$ext, $src_filename);
-                        $thumb_dest_filepath = str_replace($ext, '-150x150'.$ext, $dest_filepath);
-                        
-                        if( copy($src_filepath, $dest_filepath) ){
-                            if( file_exists($thumb_src_filepath) ){
-                                if( copy($thumb_src_filepath, $thumb_dest_filepath) )
-                                    $field_group['thumbnail_path'] = $wp_upload_dir['relative'].$acf_thumb_dir.'/'.$dest_filename;
-                            }
-                        }
-                    }
-                }
-                
+            if($type == 'fields' && $field_group['thumbnail_id']??false){
+
+                $this->save_image($field_group);
+
                 $field_group['active'] = 1;
                 $field_group['location'] = false;
             }
-            
+
             return $field_group;
         }
         
@@ -431,10 +401,60 @@ if( ! class_exists('acf_field_components') ) :
                     }
                 }
             }
-            
+            elseif( $field_group['thumbnail_id']??false ) {
+
+                $field_group = $this->save_image($field_group);
+            }
+
             return $field_group;
         }
-        
+
+        /**
+         * @param $field_group
+         * @return void
+         */
+        public function save_image(&$field_group)
+        {
+            if( !isset($field_group['thumbnail_id']) )
+                return;
+
+            $wp_upload_dir = wp_upload_dir();
+
+            $acf_thumb_dir = '/acf-thumbnails';
+
+            $image_src = get_attached_file($field_group['thumbnail_id']);
+
+            if( $image_src && strlen($image_src) ){
+
+                $src_filename = str_replace($wp_upload_dir['basedir'],'', str_replace('-150x150', '', $image_src));
+                $ext = '.'.pathinfo($src_filename, PATHINFO_EXTENSION);
+
+                $dest_filename = $field_group['key'].$ext;
+                $dest_filepath = $wp_upload_dir['basedir'].$acf_thumb_dir.'/'.$dest_filename;
+                $dest_folder = dirname($dest_filepath);
+
+                if( !is_dir( $dest_folder ) )
+                    mkdir($dest_folder, 0777, true);
+
+                if( file_exists($wp_upload_dir['basedir'].'/'.$src_filename) ){
+
+                    $src_filepath = $wp_upload_dir['basedir'].'/'.$src_filename;
+                    $thumb_src_filepath = $wp_upload_dir['basedir'].'/'.str_replace($ext, '-150x150'.$ext, $src_filename);
+                    $thumb_dest_filepath = str_replace($ext, '-150x150'.$ext, $dest_filepath);
+
+                    if( copy($src_filepath, $dest_filepath) ){
+
+                        if( file_exists($thumb_src_filepath) ){
+
+
+                            if( copy($thumb_src_filepath, $thumb_dest_filepath) )
+                                $field_group['thumbnail_path'] = $wp_upload_dir['relative'].$acf_thumb_dir.'/'.$dest_filename;
+                        }
+                    }
+                }
+            }
+        }
+
         /**
          * Add scripts for input editing page
          *

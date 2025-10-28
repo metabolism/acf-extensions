@@ -158,13 +158,13 @@ if( ! class_exists('acf_field_components') ) :
                     echo '>'.$layout['label'].'</a>';
                     
                     $thumbnail = false;
-                    
-                    if( isset($layout['thumbnail_id']) && !empty($layout['thumbnail_id']) )
-                        $thumbnail = wp_get_attachment_url($layout['thumbnail_id']);
-                    
-                    if( !$thumbnail && isset($layout['thumbnail_path']) && !empty($layout['thumbnail_path']) )
+
+                    if( isset($layout['thumbnail_path']) && !empty($layout['thumbnail_path']) )
                         $thumbnail = $layout['thumbnail_path'];
-                    
+
+                    if( !$thumbnail && isset($layout['thumbnail_id']) && !empty($layout['thumbnail_id']) )
+                        $thumbnail = wp_get_attachment_url($layout['thumbnail_id']);
+
                     if( $thumbnail )
                         echo '<span><img src="'.$thumbnail.'"></span>';
                     
@@ -403,7 +403,7 @@ if( ! class_exists('acf_field_components') ) :
             }
             elseif( $field_group['thumbnail_id']??false ) {
 
-                $field_group = $this->save_image($field_group);
+                $this->save_image($field_group);
             }
 
             return $field_group;
@@ -445,7 +445,6 @@ if( ! class_exists('acf_field_components') ) :
                     if( copy($src_filepath, $dest_filepath) ){
 
                         if( file_exists($thumb_src_filepath) ){
-
 
                             if( copy($thumb_src_filepath, $thumb_dest_filepath) )
                                 $field_group['thumbnail_path'] = $wp_upload_dir['relative'].$acf_thumb_dir.'/'.$dest_filename;
@@ -598,13 +597,13 @@ if( ! class_exists('acf_field_components') ) :
         public function acf_flexible_content_layout_title_thumbnail( $title, $field, $layout, $i ) {
             
             $thumbnail = false;
-            
-            if( isset($layout['thumbnail_id']) && !empty($layout['thumbnail_id']) )
-                $thumbnail = wp_get_attachment_url($layout['thumbnail_id']);
-            
-            if( !$thumbnail && isset($layout['thumbnail_path']) && !empty($layout['thumbnail_path']) )
+
+            if( isset($layout['thumbnail_path']) && !empty($layout['thumbnail_path']) )
                 $thumbnail = $layout['thumbnail_path'];
-            
+
+            if( !$thumbnail && isset($layout['thumbnail_id']) && !empty($layout['thumbnail_id']) )
+                $thumbnail = wp_get_attachment_url($layout['thumbnail_id']);
+
             if( $thumbnail ) {
                 $path_parts = pathinfo($thumbnail);
                 $small = str_replace('.'.$path_parts['extension'], '-150x150.'.$path_parts['extension'], $thumbnail);

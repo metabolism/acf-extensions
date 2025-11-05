@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.16
+### Changes
+- Fix image preview upload for component
+
 ## 1.3.15
 ### Changes
 - Removed expand/collapse on components (now native in ACF).

@@ -2,14 +2,14 @@
 /*
     Plugin Name: Advanced Custom Fields Extensions
     Description: Extend ACF with components, new field types, and smarter rules to speed up custom WordPress development.
-    Version: 1.3.15
+    Version: 1.3.16
     Author: Metabolism
     License: MIT
 */
 
 defined('ABSPATH') or die('No script kiddies please!');
 
-define('ACF_EXTENSIONS_VERSION', '1.3.15');
+define('ACF_EXTENSIONS_VERSION', '1.3.16');
 
 /**
  * Load up the translation files
